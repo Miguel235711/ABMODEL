@@ -13,7 +13,7 @@ Version**Python 2.7**
     <ul>
         <li>
             Run a .py file that is called with a main prefix: <i>python.exe [fileName.py]</i> (Windows cmd) or <i>python [fileName.py]</i>
-            Example:
+            Example: <i> python.exe mainWindow.py</i>
         </li>
     </ul>
     
