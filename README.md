@@ -10,3 +10,7 @@
       </li>
     </ul>
 2. <ins>**Run Code:**</ins>
+    <ul>
+        Run a .py file that is called with a main prefix: *python.exe [fileName.py]* (Windows cmd) or *python [fileName.py]*
+    </ul>
+    
