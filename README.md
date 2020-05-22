@@ -1,5 +1,5 @@
 # ABMODEL
-Version**Python 2.7**
+Version: **Python 2.7**
 1. <ins>**Install Dependencies:**</ins>
     <ul>
       <li>
