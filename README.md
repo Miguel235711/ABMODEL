@@ -3,7 +3,7 @@
 1. <ins>**Install Dependencies:**</ins>
     <ul>
       <li>
-          Install unofficial release of pyqt5 library for GUI handling: <s>pip install python-qt5</s>
+          Install unofficial release of pyqt5 library for GUI handling: <u>pip install python-qt5</u>
       </li>
       <li>
         Install qtgraph module: *pip install pyqtgraph*
