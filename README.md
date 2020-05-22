@@ -1,8 +1,6 @@
 # ABMODEL
 **Python 2.7**
-<ol>
-  <li>
-    <ins>**Install Dependencies:**</ins>
+1. <ins>**Install Dependencies:**</ins>
     <ul>
       <li>
         Install unofficial release of pyqt5 library for GUI handling: *pip install python-qt5*
@@ -11,8 +9,4 @@
         Install qtgraph module: *pip install pyqtgraph*
       </li>
     </ul>
-  </li>
-  <li>
-    <ins>**Run Code:**</ins>
-  </li>
-</ol>
+2. <ins>**Run Code:**</ins>
