@@ -1,5 +1,5 @@
 # ABMODEL
-**Python 2.7**
+Version**Python 2.7**
 1. <ins>**Install Dependencies:**</ins>
     <ul>
       <li>
@@ -13,6 +13,7 @@
     <ul>
         <li>
             Run a .py file that is called with a main prefix: <i>python.exe [fileName.py]</i> (Windows cmd) or <i>python [fileName.py]</i>
+            Example:
         </li>
     </ul>
     
