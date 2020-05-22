@@ -2,10 +2,10 @@
 **Python 2.7**
 1. <ins>**Install Dependencies:**</ins>
 <ul>
-  <li>
+  &ensp;<li>
     Install unofficial release of pyqt5 library for GUI handling: *pip install python-qt5*
   </li>
-  <li>
+  &ensp;<li>
     Install qtgraph module: *pip install pyqtgraph*
   </li>
 </ul>
