@@ -2,6 +2,13 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMess
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
 
+import sys
+sys.path.append('../Authentication')
+
+import users
+import passwords
+import authenticationMain
+
 class Pantalla(QWidget):
     def __init__(self):
         super(QWidget,self).__init__()
@@ -67,15 +74,15 @@ class Pantalla(QWidget):
         btnOk.move(850,650)
         btnOk.clicked.connect(lambda: self.comprobarUsuarioContra(usrInput.text(),passInput.text()))
 
-        # btn = QPushButton('Cancelar',self)
-        # btn.move(1000,650)
+        btn = QPushButton('Cancelar',self)
+        btn.move(1000,650)
 
     def comprobarUsuarioContra(self,user,contra):
         if(len(user) < 8 or len(contra) < 8):
             self.showDialog("Estatus de registro", "Usuario/Contrasena muy corto",QMessageBox.Warning)
         else:
             self.showDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente" ,QMessageBox.Information)
-            file = open("../Usuarios.txt","a") 
+            file = open("../Usuarios.txt","a")
             file.write(user+"\n"+contra+"\n")
             file.close() 
             

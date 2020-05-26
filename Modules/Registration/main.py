@@ -1,4 +1,3 @@
-import sys
 from PyQt5.QtWidgets import QApplication
 import mainWindow
 import registrationMain as regs
