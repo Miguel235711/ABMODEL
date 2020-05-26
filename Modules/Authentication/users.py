@@ -12,7 +12,10 @@ def UsersEncriptation(_users, _password):
             temp_number += ord(x)
 
         for x in _users:
-            _users = _users.replace(x, chr((temp_number + ord(x)) % encriptation), 1)
+            modificador = 0
+            if((temp_number + ord(x)) % encriptation == 10):
+                modificador = 1
+            _users = _users.replace(x, chr((temp_number + ord(x) + modificador) % encriptation), 1)
             #print ((temp_number + ord(x)) % encriptation)
 
 
