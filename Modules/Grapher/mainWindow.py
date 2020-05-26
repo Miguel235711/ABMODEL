@@ -1,11 +1,14 @@
 from PyQt5.QtWidgets import QMainWindow,QPushButton,QToolTip,QStatusBar,QLabel,QMessageBox
 from PyQt5.QtGui import QFont,QIcon
+import state
 
 class MainWindow(QMainWindow):
     def __init__(self,title,iconPath,centralWidget):
         super(QMainWindow,self).__init__()
         self.setCentralWidget(centralWidget)
-        self.statusBar().addPermanentWidget(QLabel("Estado: "))
+        #self.statusBar().addPermanentWidget(QLabel("Estado: "))
+        #self.statusBar().addPermanentWidget(QLabel("Conectado"))
+        self.statusBar().addPermanentWidget(state.State())
         self.title=title
         self.iconPath=iconPath
         self.initUI()
