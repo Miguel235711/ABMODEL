@@ -5,29 +5,29 @@ from PyQt5.QtGui import QIcon,QFont,QPixmap
 import graph
 
 class Container(QWidget):
-    waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
+    __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
     def __init__(self):
         super(QWidget,self).__init__()
-        self.graphs=[]
-        self.initUI()
+        self.__graphs=[]
+        self.__initUI()
 
     def initGraphs(self,data):
         #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
         for i in range(4):
-            self.graphs.append(graph.Graph([pair[0] for pair in data ],[pair[1][i] for pair in data],self.waveColors[i]))
-            self.graphs[i].plotGraph()
-            self.graphLayout.addWidget(self.graphs[i].getGraph())
+            self.__graphs.append(graph.Graph([pair[0] for pair in data ],[pair[1][i] for pair in data],self.__waveColors[i]))
+            self.__graphs[i].plotGraph()
+            self.__graphLayout.addWidget(self.__graphs[i].getGraph())
         
-    def initWindowUILayout(self):
-        self.mainLayout=QHBoxLayout()
-        self.graphLayout=QVBoxLayout()
-        self.contectivityLayout=QVBoxLayout()
-        self.mainLayout.addLayout(self.contectivityLayout)
-        self.mainLayout.addLayout(self.graphLayout)
+    def __initWindowUILayout(self):
+        self.__mainLayout=QHBoxLayout()
+        self.__graphLayout=QVBoxLayout()
+        self.__contectivityLayout=QVBoxLayout()
+        self.__mainLayout.addLayout(self.__contectivityLayout)
+        self.__mainLayout.addLayout(self.__graphLayout)
         connectionPic=QLabel() 
         connectionPic.setPixmap(QPixmap('../../Public/Images/connectionLevel.png'))
-        self.contectivityLayout.addWidget(connectionPic)
-        self.setLayout(self.mainLayout)
+        self.__contectivityLayout.addWidget(connectionPic)
+        self.setLayout(self.__mainLayout)
 
-    def initUI(self):
-        self.initWindowUILayout()
+    def __initUI(self):
+        self.__initWindowUILayout()
