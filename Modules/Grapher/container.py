@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 #from pyqtgraph import PlotWidget, plot
 
@@ -19,6 +19,12 @@ class Container(QWidget):
             self.__graphLayout.addWidget(self.__graphs[i].getGraph())
         
     def __initWindowUILayout(self):
+        #root layout
+        
+        self.__globalLayout=QVBoxLayout()
+        
+        #main layout
+
         self.__mainLayout=QHBoxLayout()
         self.__graphLayout=QVBoxLayout()
         self.__contectivityLayout=QVBoxLayout()
@@ -27,7 +33,35 @@ class Container(QWidget):
         connectionPic=QLabel() 
         connectionPic.setPixmap(QPixmap('../../Public/Images/connectionLevel.png'))
         self.__contectivityLayout.addWidget(connectionPic)
-        self.setLayout(self.__mainLayout)
+        
+        #menu bar layout
+        self.__menuBarLayout=QHBoxLayout()
+        
+        #user info
+        spLeft=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
+        spLeft.setHorizontalStretch(3)
+        userInfoLabel=QLabel("Placholder of user")
+        userInfoLabel.setSizePolicy(spLeft)
+        self.__menuBarLayout.addWidget(userInfoLabel)
+
+        #menu button
+        spRight=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
+        spRight.setHorizontalStretch(1)
+        self.__menuButton=QPushButton("Menu")
+        self.__menuButton.setStyleSheet("border-radius:20px;background-color:white;padding: 10px;border-width:1.5px;border-color:black;"+
+        "border-style: outset;font: bold 30px;margin-top:20px;margin-bottom:20px;margin-right:80px;")
+        self.__menuButton.setSizePolicy(spRight)
+        self.__menuBarLayout.addWidget(self.__menuButton)
+        self.__menuButton
+
+        #adding sublayouts to globaLayout
+
+        self.__globalLayout.addLayout(self.__menuBarLayout)
+        self.__globalLayout.addLayout(self.__mainLayout)
+
+        #set globaLayout to container
+
+        self.setLayout(self.__globalLayout)
 
     def __initUI(self):
         self.__initWindowUILayout()
