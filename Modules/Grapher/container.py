@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 #from pyqtgraph import PlotWidget, plot
 
@@ -18,6 +18,9 @@ class Container(QWidget):
             self.__graphs[i].plotGraph()
             self.__graphLayout.addWidget(self.__graphs[i].getGraph())
         
+    def onClickMenuButton(self):
+        print 'Menu Button Clicked'
+        self.__dialogWindow.open()
     def __initWindowUILayout(self):
         #root layout
         
@@ -48,11 +51,25 @@ class Container(QWidget):
         spRight=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
         spRight.setHorizontalStretch(1)
         self.__menuButton=QPushButton("Menu")
-        self.__menuButton.setStyleSheet("border-radius:20px;background-color:white;padding: 10px;border-width:1.5px;border-color:black;"+
-        "border-style: outset;font: bold 30px;margin-top:20px;margin-bottom:20px;margin-right:80px;")
         self.__menuButton.setSizePolicy(spRight)
+        self.__menuButton.setStyleSheet(
+        """
+        QPushButton{
+            border-radius:20px;
+            background-color:white;
+            padding: 10px;
+            border-width:1.5px;
+            border-color:black;
+            border-style: outset;
+            font: bold 30px;
+            margin-top:20px;
+            margin-bottom:20px;
+            margin-right:80px;
+        }
+        """)
+        self.__menuButton.clicked.connect(self.onClickMenuButton)
+        self.__menuButton.setToolTip("Abrir Menu")
         self.__menuBarLayout.addWidget(self.__menuButton)
-        self.__menuButton
 
         #adding sublayouts to globaLayout
 
@@ -62,6 +79,42 @@ class Container(QWidget):
         #set globaLayout to container
 
         self.setLayout(self.__globalLayout)
+    def __initDialogWindow(self):
+        self.__dialogWindow=QDialog()
+        mainLayout=QVBoxLayout()
 
+        #initialize sub-layouts
+
+        fileNameLayout=QHBoxLayout()
+        pacientLayout=QHBoxLayout()
+        fileDataLayout=QHBoxLayout()
+        filePathLayout=QHBoxLayout()
+
+        #add contents to sub-layouts
+
+        #fileName
+
+        fileNameLayout.addWidget(QLabel('Nombre del Archivo: '))
+        fileNameLayout.addWidget(QLineEdit())
+
+        #pacient
+
+        pacientLayout.addWidget(QLabel('Paciente: '))
+        pacientLayout.addWidget(QLineEdit())
+
+        #fileData
+
+        fileDataLayout.addWidget(QLabel('Fecha del archivo: '))
+        fileDataLayout.addWidget(QLabel('30/02/2020'))
+
+        #adding sublayouts to mainLayout
+
+        mainLayout.addLayout(fileNameLayout)
+        mainLayout.addLayout(pacientLayout)
+        mainLayout.addLayout(fileDataLayout)
+        mainLayout.addLayout(filePathLayout)
+
+        self.__dialogWindow.setLayout(mainLayout)
     def __initUI(self):
         self.__initWindowUILayout()
+        self.__initDialogWindow()
