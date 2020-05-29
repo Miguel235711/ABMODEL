@@ -2,13 +2,6 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMess
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
 
-import sys
-sys.path.append('../Authentication')
-
-import users
-import passwords
-import authenticationMain
-
 class Pantalla(QWidget):
     def __init__(self):
         super(QWidget,self).__init__()
