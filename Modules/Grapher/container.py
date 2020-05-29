@@ -1,14 +1,17 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 #from pyqtgraph import PlotWidget, plot
 
 import graph
+import menu
+import userInfo
 
 class Container(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
     def __init__(self):
         super(QWidget,self).__init__()
         self.__graphs=[]
+        self.__dialogWindow=menu.Menu()
         self.__initUI()
 
     def initGraphs(self,data):
@@ -43,9 +46,9 @@ class Container(QWidget):
         #user info
         spLeft=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
         spLeft.setHorizontalStretch(3)
-        userInfoLabel=QLabel("Placholder of user")
-        userInfoLabel.setSizePolicy(spLeft)
-        self.__menuBarLayout.addWidget(userInfoLabel)
+        userInfoWidgetInstance=userInfo.UserInfo()
+        userInfoWidgetInstance.setSizePolicy(spLeft)
+        self.__menuBarLayout.addWidget(userInfoWidgetInstance)
 
         #menu button
         spRight=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
@@ -79,42 +82,6 @@ class Container(QWidget):
         #set globaLayout to container
 
         self.setLayout(self.__globalLayout)
-    def __initDialogWindow(self):
-        self.__dialogWindow=QDialog()
-        mainLayout=QVBoxLayout()
-
-        #initialize sub-layouts
-
-        fileNameLayout=QHBoxLayout()
-        pacientLayout=QHBoxLayout()
-        fileDataLayout=QHBoxLayout()
-        filePathLayout=QHBoxLayout()
-
-        #add contents to sub-layouts
-
-        #fileName
-
-        fileNameLayout.addWidget(QLabel('Nombre del Archivo: '))
-        fileNameLayout.addWidget(QLineEdit())
-
-        #pacient
-
-        pacientLayout.addWidget(QLabel('Paciente: '))
-        pacientLayout.addWidget(QLineEdit())
-
-        #fileData
-
-        fileDataLayout.addWidget(QLabel('Fecha del archivo: '))
-        fileDataLayout.addWidget(QLabel('30/02/2020'))
-
-        #adding sublayouts to mainLayout
-
-        mainLayout.addLayout(fileNameLayout)
-        mainLayout.addLayout(pacientLayout)
-        mainLayout.addLayout(fileDataLayout)
-        mainLayout.addLayout(filePathLayout)
-
-        self.__dialogWindow.setLayout(mainLayout)
     def __initUI(self):
         self.__initWindowUILayout()
-        self.__initDialogWindow()
+        self.__dialogWindow.initDialogWindow()
