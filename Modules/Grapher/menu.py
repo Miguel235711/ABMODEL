@@ -1,9 +1,12 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
+from PyQt5.QtGui import QIcon
 
 class Menu(QDialog):
     def __init__(self):
         super(QDialog,self).__init__()
-    
+        self.setWindowTitle('Menu')
+        self.setWindowIcon(QIcon('../../Public/Images/cheese.jpg'))
+
     def __getFile(self):
         fileInfo=QFileDialog.getOpenFileName(self,"Selecciona Archivo","","Files (*.csv)")
         self.__filePathLabel.setText(fileInfo[0])
