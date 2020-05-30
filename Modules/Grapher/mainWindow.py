@@ -6,7 +6,6 @@ from time import sleep
 
 
 class MainWindow(QMainWindow):
-
     def statusBarTester(self):
         while self.__shouldThreadsRun:
             for _ in range(400):
@@ -29,13 +28,28 @@ class MainWindow(QMainWindow):
         self.__statusBarTesterThread.start()
 
         self.statusBar().addPermanentWidget(self.__state)
+        self.statusBar().setStyleSheet(
+        """
+        background-color:white;
+        """
+        )
+        self.statusBar().setFixedHeight(40)
         
         #self.__toolBar=self.addToolBar("Main toolbar")
         #self.__toolBar.addAction(QPushButton("Menu"))
 
         self.__title=title
         self.__iconPath=iconPath
+        self.setBackground()
         self.__initUI()
+
+    def setBackground(self):
+        self.setStyleSheet(
+        """
+        QMainWindow{
+            background-image:url(../../Public/Images/background.png)
+        }
+        """)
 
     def __initUI(self):
         self.__initWindowUIMetaData()

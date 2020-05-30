@@ -21,9 +21,9 @@ class State(QWidget):
             #load icons
             print('load icons')
             State.__states[0].icon=QPixmap("../../Public/Images/connectedIcon.png")
-            State.__states[0].icon=State.__states[0].icon.scaledToWidth(30)
+            State.__states[0].icon=State.__states[0].icon.scaledToWidth(15)
             State.__states[1].icon=QPixmap("../../Public/Images/disconnectedIcon.png")
-            State.__states[1].icon=State.__states[1].icon.scaledToWidth(30)
+            State.__states[1].icon=State.__states[1].icon.scaledToWidth(15)
             State.__iconsAlreadyLoaded=True
         
         #boolean for connection state

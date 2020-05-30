@@ -1,23 +1,20 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 #from pyqtgraph import PlotWidget, plot
 
-import graph
+import multiGraphContainer
+import menu
+import userInfo
 
 class Container(QWidget):
-    __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
     def __init__(self):
         super(QWidget,self).__init__()
-        self.__graphs=[]
+        self.__dialogWindow=menu.Menu()
+        self.__graphsWidget=multiGraphContainer.MultiGraphContainer()
         self.__initUI()
-
     def initGraphs(self,data):
-        #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
-        for i in range(4):
-            self.__graphs.append(graph.Graph([pair[0] for pair in data ],[pair[1][i] for pair in data],self.__waveColors[i]))
-            self.__graphs[i].plotGraph()
-            self.__graphLayout.addWidget(self.__graphs[i].getGraph())
-        
+        self.__graphsWidget.initGraphs(data)
+
     def onClickMenuButton(self):
         print 'Menu Button Clicked'
         self.__dialogWindow.open()
@@ -31,11 +28,10 @@ class Container(QWidget):
         self.__mainLayout=QHBoxLayout()
         self.__graphLayout=QVBoxLayout()
         self.__contectivityLayout=QVBoxLayout()
-        self.__mainLayout.addLayout(self.__contectivityLayout)
-        self.__mainLayout.addLayout(self.__graphLayout)
         connectionPic=QLabel() 
         connectionPic.setPixmap(QPixmap('../../Public/Images/connectionLevel.png'))
-        self.__contectivityLayout.addWidget(connectionPic)
+        self.__mainLayout.addWidget(connectionPic)
+        self.__mainLayout.addWidget(self.__graphsWidget.getWidget())
         
         #menu bar layout
         self.__menuBarLayout=QHBoxLayout()
@@ -43,9 +39,9 @@ class Container(QWidget):
         #user info
         spLeft=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
         spLeft.setHorizontalStretch(3)
-        userInfoLabel=QLabel("Placholder of user")
-        userInfoLabel.setSizePolicy(spLeft)
-        self.__menuBarLayout.addWidget(userInfoLabel)
+        userInfoWidgetInstance=userInfo.UserInfo()
+        userInfoWidgetInstance.setSizePolicy(spLeft)
+        self.__menuBarLayout.addWidget(userInfoWidgetInstance)
 
         #menu button
         spRight=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
@@ -66,6 +62,9 @@ class Container(QWidget):
             margin-bottom:20px;
             margin-right:80px;
         }
+        QPushButton:hover {
+            background: rgb(230,230,230)
+        }
         """)
         self.__menuButton.clicked.connect(self.onClickMenuButton)
         self.__menuButton.setToolTip("Abrir Menu")
@@ -79,42 +78,6 @@ class Container(QWidget):
         #set globaLayout to container
 
         self.setLayout(self.__globalLayout)
-    def __initDialogWindow(self):
-        self.__dialogWindow=QDialog()
-        mainLayout=QVBoxLayout()
-
-        #initialize sub-layouts
-
-        fileNameLayout=QHBoxLayout()
-        pacientLayout=QHBoxLayout()
-        fileDataLayout=QHBoxLayout()
-        filePathLayout=QHBoxLayout()
-
-        #add contents to sub-layouts
-
-        #fileName
-
-        fileNameLayout.addWidget(QLabel('Nombre del Archivo: '))
-        fileNameLayout.addWidget(QLineEdit())
-
-        #pacient
-
-        pacientLayout.addWidget(QLabel('Paciente: '))
-        pacientLayout.addWidget(QLineEdit())
-
-        #fileData
-
-        fileDataLayout.addWidget(QLabel('Fecha del archivo: '))
-        fileDataLayout.addWidget(QLabel('30/02/2020'))
-
-        #adding sublayouts to mainLayout
-
-        mainLayout.addLayout(fileNameLayout)
-        mainLayout.addLayout(pacientLayout)
-        mainLayout.addLayout(fileDataLayout)
-        mainLayout.addLayout(filePathLayout)
-
-        self.__dialogWindow.setLayout(mainLayout)
     def __initUI(self):
         self.__initWindowUILayout()
-        self.__initDialogWindow()
+        self.__dialogWindow.initDialogWindow()
