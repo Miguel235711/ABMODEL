@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 
 class Menu(QDialog):
     def __init__(self):
-        super(QDialog,self).__init__()
+        super(QDialog,self).__init__(None,Qt.WindowStaysOnTopHint)
         self.setWindowTitle('Menu')
         self.setWindowIcon(QIcon('../../Public/Images/cheese.jpg'))
 

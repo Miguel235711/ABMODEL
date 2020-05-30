@@ -62,6 +62,9 @@ class Container(QWidget):
             margin-bottom:20px;
             margin-right:80px;
         }
+        QPushButton:hover {
+            background: rgb(230,230,230)
+        }
         """)
         self.__menuButton.clicked.connect(self.onClickMenuButton)
         self.__menuButton.setToolTip("Abrir Menu")
