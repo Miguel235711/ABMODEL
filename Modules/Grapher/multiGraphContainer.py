@@ -28,6 +28,14 @@ class MultiGraphContainer(QWidget):
         self.__configurationDialog=configuration.Configuration()
     def onClickConfiguration(self):
         self.__configurationDialog.open()
+    def __testRemovingGraphs(self):
+        for i in range(4):
+            self.__graphLayout.removeWidget(self.__graphs[i].getGraph())
+            self.__graphs[i].getGraph().hide()
+    def __testAddingPixmapOfElectroencephalograms(self):
+        electroEncephalogram=QLabel()
+        electroEncephalogram.setPixmap(QPixmap('../../Public/Images/electroEncephalogram1Icon'))
+        self.__graphLayout.insertWidget(0,electroEncephalogram)
     def initGraphs(self,data):
         #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
         print 'initGraphsCalled'
@@ -40,7 +48,6 @@ class MultiGraphContainer(QWidget):
                 background: transparent;
             }
         """
-
         graphControlsLayout=QHBoxLayout()
         bookmarkButton=QPushButton()
         bookmarkButton.setIcon(QIcon('../../Public/Images/bookmarkIcon.png'))
@@ -55,7 +62,10 @@ class MultiGraphContainer(QWidget):
         configurationButton.setStyleSheet(buttonStyleSheet)
         configurationButton.clicked.connect(self.onClickConfiguration)
         graphControlsLayout.addWidget(configurationButton)
-        self.__graphLayout.addLayout(graphControlsLayout)
-
+        self.__graphLayoutWidget=QWidget()
+        self.__graphLayoutWidget.setLayout(graphControlsLayout)
+        self.__graphLayout.addWidget(self.__graphLayoutWidget)
+        #self.__testRemovingGraphs()
+        #self.__testAddingPixmapOfElectroencephalograms()
     def getWidget(self):
         return self.__mainWidget
