@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 
 class Menu(QDialog):
     def __init__(self):
-        super(QDialog,self).__init__(None,Qt.WindowStaysOnTopHint)
+        super(QDialog,self).__init__(None,Qt.WindowStaysOnTopHint | Qt.WindowSystemMenuHint| Qt.WindowCloseButtonHint)
         self.setWindowTitle('Menu')
         self.setWindowIcon(QIcon('../../Public/Images/cheese.jpg'))
 
