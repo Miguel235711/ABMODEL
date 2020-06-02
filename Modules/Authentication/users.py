@@ -23,5 +23,4 @@ def UsersEncriptation(_users, _password):
             if(x == "$" or x == "/" or x == "!" or x == "-" or x == "K" or x == " " or x == "7"):
                 match+= 1
         encriptation += 16
-    print _users
-    print encriptation
+    return _users

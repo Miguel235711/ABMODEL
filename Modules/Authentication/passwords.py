@@ -28,4 +28,4 @@ def encryptacion(_usuario, _password):
     _password + chr(temp_number % 128) + chr(temp_number % 224) + chr(temp_number % 256)
     #Imprimir resultado
     print (_password)
-    UsersEncriptation(_usuario, _password)
+    return _password

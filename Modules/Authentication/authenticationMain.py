@@ -2,6 +2,7 @@
 #usuario = "Alfredo"
 #password = "Rodrigo"
 from passwords import encryptacion
+from users import UsersEncriptation
 
 def main():
     accept = False
@@ -15,7 +16,10 @@ def main():
                     if(x == "@" or x == "-" or x == "_" or x == "?" or x == "." or x == "."):
                         match+= 1
                 if(match >= 2):
-                    encryptacion(Usuario, Password)
+                    Pass = ""
+                    User = ""
+                    Pass = encryptacion(Usuario, Password)
+                    User = UsersEncriptation(Usuario, Pass)
                     accept = True
                 else:
                     print("Contraseña insegura. Combina caracteres especiales")
