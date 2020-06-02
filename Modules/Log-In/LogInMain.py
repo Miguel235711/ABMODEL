@@ -29,7 +29,7 @@ class Pantalla(QWidget):
         l1.setFont(QFont('SansSerif', 50))
 
         l2 = QLabel(self)
-        l2.setText("Sistema de registro")
+        l2.setText("Iniciar Sesion")
         l2.move(0,0)
         l2.setAlignment(Qt.AlignCenter)
         l2.resize(1920,670)
@@ -71,13 +71,41 @@ class Pantalla(QWidget):
         btn.move(1000,650)
 
     def comprobarUsuarioContra(self,user,contra):
-        if(len(user) < 8 or len(contra) < 8):
-            self.showDialog("Estatus de registro", "Usuario/Contrasena muy corto",QMessageBox.Warning)
-        else:
-            self.showDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente" ,QMessageBox.Information)
-            file = open("../Usuarios.txt","a")
-            file.write(user+":"+contra+"\n")
-            file.close() 
+        file = open("../Usuarios.txt","r")
+        m = file.readlines()
+        #     []
+        # for line in file:
+        #         m.append(line)
+        contraRegistradas = []
+        userRegistrados = []
+        for i in range(0,len(m)):
+            change = False
+            tempUser = ""
+            tempContra = ""
+            for char in range(0,len(m[i]) -1 ):
+                if(change == False):
+                    if(m[i][char] == ':'):
+                        change = True
+                    else:
+                        tempUser = tempUser + m[i][char]
+                else:
+                    tempContra = tempContra + m[i][char]
+            contraRegistradas.append(tempContra)
+            userRegistrados.append(tempUser)
+
+        for i in range(0,len(userRegistrados)):
+            if(userRegistrados[i] == user):
+                if(contraRegistradas[i] == contra):
+                    print("Usuario registrado")
+                    self.showDialog("Inicio de sesion", "Usuario Registrado",QMessageBox.Information)
+                    # Funcinamiento para entrar al menu
+                    return
+                else:
+                    self.showDialog("Inicio de sesion", "Contrasena Incorrecta",QMessageBox.Warning)
+                return
+
+        self.showDialog("Inicio de sesion", "Usuario Inexistente", QMessageBox.Warning)
+        file.close() 
             
     
     def showDialog(self,titulo,textoCuerpo,icon):
