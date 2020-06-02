@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication
 import mainWindow
-import registrationMain as regs
+import LogInMain as regs
 
 def main():
     app=QApplication([])
