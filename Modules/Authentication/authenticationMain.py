@@ -12,10 +12,13 @@ def main():
         if(len(Usuario) >= 8):
             if(len(Password) >= 8):
                 match = 0
+                accept = True
                 for x in Password:
                     if(x == "@" or x == "-" or x == "_" or x == "?" or x == "." or x == "."):
+                        if(x == ":"):
+                            accept = False
                         match+= 1
-                if(match >= 2):
+                if(match >= 2 and accept == True):
                     Pass = ""
                     User = ""
                     Pass = encryptacion(Usuario, Password)
