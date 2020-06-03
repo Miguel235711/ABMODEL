@@ -11,7 +11,7 @@ def readCV():
 def main():
     cvFile=readCV()
     app=QApplication([])
-    containerInstance=container.Container()
+    containerInstance=container.Container(app)
     #dummy=[cvFile.getAverageOfWavesAndTime(0),cvFile.getAverageOfWavesAndTime(1),cvFile.getAverageOfWavesAndTime(2),cvFile.getAverageOfWavesAndTime(3)]
     #data
     mainWindowInstance=mainWindow.MainWindow('ABMODEL','../../Public/Images/cheese.jpg',containerInstance)
