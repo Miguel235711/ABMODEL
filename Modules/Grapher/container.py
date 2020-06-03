@@ -7,10 +7,10 @@ import menu
 import userInfo
 
 class Container(QWidget):
-    def __init__(self):
+    def __init__(self,app):
         super(QWidget,self).__init__()
         self.__dialogWindow=menu.Menu()
-        self.__graphsWidget=multiGraphContainer.MultiGraphContainer()
+        self.__graphsWidget=multiGraphContainer.MultiGraphContainer(app)
         self.__initUI()
     def initGraphs(self,data):
         self.__graphsWidget.initGraphs(data)
