@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QPixmap
+from PyQt5.QtCore import QSize,QThreadPool
 
 import graph 
 import configuration
+import encephalogram
 
 class MultiGraphContainer(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
@@ -10,6 +12,7 @@ class MultiGraphContainer(QWidget):
         super(QWidget,self).__init__()
         self.__graphs=[]
         self.__graphLayout=QVBoxLayout()
+        self.__encephalogram=encephalogram.Encephalogram()
         self.__mainWidget=QWidget(self)
         self.__mainWidget.setLayout(self.__graphLayout)
         self.__mainWidget.setObjectName('mainWidget')
@@ -25,17 +28,39 @@ class MultiGraphContainer(QWidget):
             }
         """
         )
-        self.__configurationDialog=configuration.Configuration()
+        self.__configurationDialog=configuration.Configuration(self.__changeToGraphsHandler,self.__changeToEncephalogramsHandler)
+    def __changeToGraphsHandler(self):
+        print 'changeToGraphsHandler'
+        self.__hideEncephalogram()
+        self.__showGraphs()
+
+    def __hideEncephalogram(self):
+        self.__graphLayout.removeWidget(self.__encephalogram)
+        self.__encephalogram.hide()
+
+    def __changeToEncephalogramsHandler(self):
+        print 'changeToEncephalogramsHandler'
+        self.__hideGraphs()
+        self.__showEncephalogram()
+
+    def __showEncephalogram(self):
+        self.__graphLayout.insertWidget(0,self.__encephalogram)
+        self.__encephalogram.show()
+
     def onClickConfiguration(self):
         self.__configurationDialog.open()
-    def __testRemovingGraphs(self):
+
+    def __showGraphs(self):
+        for i in range(4):
+            if self.__graphs[i].getGraph().isHidden:
+                self.__graphLayout.insertWidget(0,self.__graphs[i].getGraph())
+                self.__graphs[i].getGraph().show()
+
+    def __hideGraphs(self):
         for i in range(4):
             self.__graphLayout.removeWidget(self.__graphs[i].getGraph())
             self.__graphs[i].getGraph().hide()
-    def __testAddingPixmapOfElectroencephalograms(self):
-        electroEncephalogram=QLabel()
-        electroEncephalogram.setPixmap(QPixmap('../../Public/Images/electroEncephalogram1Icon'))
-        self.__graphLayout.insertWidget(0,electroEncephalogram)
+
     def initGraphs(self,data):
         #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
         print 'initGraphsCalled'
@@ -48,24 +73,27 @@ class MultiGraphContainer(QWidget):
                 background: transparent;
             }
         """
+        iconSize=QSize(40,40)
         graphControlsLayout=QHBoxLayout()
         bookmarkButton=QPushButton()
         bookmarkButton.setIcon(QIcon('../../Public/Images/bookmarkIcon.png'))
+        bookmarkButton.setIconSize(iconSize)
         bookmarkButton.setStyleSheet(buttonStyleSheet)
         graphControlsLayout.addWidget(bookmarkButton)
         recordButton=QPushButton()
-        recordButton.setIcon(QIcon(QPixmap('../../Public/Images/recordIcon.png')))
+        recordButton.setIcon(QIcon('../../Public/Images/recordIcon.png'))
+        recordButton.setIconSize(iconSize)
         recordButton.setStyleSheet(buttonStyleSheet)
         graphControlsLayout.addWidget(recordButton)
         configurationButton=QPushButton()
-        configurationButton.setIcon(QIcon(QPixmap('../../Public/Images/configurationIcon.png')))
+        configurationButton.setIcon(QIcon('../../Public/Images/configurationIcon.png'))
+        configurationButton.setIconSize(iconSize)
         configurationButton.setStyleSheet(buttonStyleSheet)
         configurationButton.clicked.connect(self.onClickConfiguration)
         graphControlsLayout.addWidget(configurationButton)
         self.__graphLayoutWidget=QWidget()
         self.__graphLayoutWidget.setLayout(graphControlsLayout)
         self.__graphLayout.addWidget(self.__graphLayoutWidget)
-        #self.__testRemovingGraphs()
-        #self.__testAddingPixmapOfElectroencephalograms()
+
     def getWidget(self):
         return self.__mainWidget

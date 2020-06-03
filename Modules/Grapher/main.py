@@ -18,5 +18,5 @@ def main():
     data=cvFile.getAllData()
     #print(data)
     containerInstance.initGraphs(data)
-    app.exec_()
+    sys.exit(app.exec_())
 main()
