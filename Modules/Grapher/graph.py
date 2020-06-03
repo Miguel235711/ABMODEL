@@ -37,7 +37,7 @@ class Graph():
             self.__pause=pause
         def getPause(self):
             return self.__pause
-    xDifLimit=11
+    xDifLimit=8
     def __init__(self,timePoints,wavePoints,waveColor,app):
         setConfigOption('background',(230,230,230))
         setConfigOption('foreground',(0,0,0))
@@ -67,8 +67,9 @@ class Graph():
         x0= first if last - first <= self.xDifLimit else last - self.xDifLimit
         x1= x0 + self.xDifLimit
         print(x0,x1)
-        self.__graph.plot(self.__timePointsProgressive,self.__wavePointsProgressive,pen=mkPen(color=self.__waveColor,width=3))
-        self.__graph.setXRange(x0,x1)
+        if self.__i&1:
+            self.__graph.plot(self.__timePointsProgressive,self.__wavePointsProgressive,pen=mkPen(color=self.__waveColor,width=3))
+            self.__graph.setXRange(x0,x1)
         self.__i+=1
     def plotGraph(self):
         #worker = self.Worker(self.__realTimePlotting)
