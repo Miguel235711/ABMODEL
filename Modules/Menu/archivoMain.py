@@ -68,3 +68,4 @@ class Pantalla(QWidget):
         dialog.setStyleSheet("QLabel{font-size: 16px;}")
         dialog.setIcon(icon)
         x = dialog.exec_()
+
