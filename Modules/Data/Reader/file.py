@@ -20,7 +20,7 @@ class File:
             self.dataRows=list(reader)
             print 'data read and saved correctly'
             #print 'number of rows:',len(self.dataRows)
-            #print 'elements per rows:',len(self.dataRows[0])
+            print 'elements per rows:',len(self.dataRows[0])
             self.amountOfSensors=(len(self.dataRows[0])-1)/self.amountOfWaves
     
     def getAverageOfWavesAndTime(self,row):
