@@ -1,6 +1,4 @@
 # coding=utf-8
-#usuario = "Alfredo"
-#password = "Rodrigo"
 from passwords import encryptacion
 from users import UsersEncriptation
 
