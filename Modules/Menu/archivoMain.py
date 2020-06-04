@@ -69,3 +69,4 @@ class Pantalla(QWidget):
         dialog.setIcon(icon)
         x = dialog.exec_()
 
+#Hello hello
