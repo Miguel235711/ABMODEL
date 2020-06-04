@@ -8,6 +8,7 @@ import encephalogram
 
 class MultiGraphContainer(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
+    __graphNames=['BETA','ALPHA','GAMMA','DELTA']
     def __init__(self,app):
         super(QWidget,self).__init__()
         self.__app=app
@@ -67,7 +68,7 @@ class MultiGraphContainer(QWidget):
         #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
         print 'initGraphsCalled'
         for i in range(4):
-            self.__graphs.append(graph.Graph([pair[0] for pair in data ],[pair[1][i] for pair in data],self.__waveColors[i],self.__app))
+            self.__graphs.append(graph.Graph([pair[0] for pair in data ],[pair[1][i] for pair in data],self.__waveColors[i],self.__app,self.__graphNames[i]))
             self.__graphs[i].plotGraph()
             self.__graphLayout.addWidget(self.__graphs[i].getGraph())
         buttonStyleSheet="""
