@@ -9,12 +9,18 @@ import encephalogram
 class MultiGraphContainer(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
     __graphNames=['BETA','ALPHA','GAMMA','DELTA']
+    __recordPauseTooltipTexts=['Iniciar/Continuar Grabacion de Ondas','Detener Grabacion de Ondas']
     def __init__(self,app):
         super(QWidget,self).__init__()
         self.__app=app
         self.__graphs=[]
         self.__graphLayout=QVBoxLayout()
-        self.__encephalogram=encephalogram.Encephalogram()
+        self.__encephalograms={
+            'Alpha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram1Icon.png'),
+            'Betha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram2Icon.png'),
+            'Delta':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram3Icon.png'),
+            'Gamma':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram4Icon.png')
+        }
         self.__mainWidget=QWidget(self)
         self.__mainWidget.setLayout(self.__graphLayout)
         self.__mainWidget.setObjectName('mainWidget')
@@ -32,23 +38,27 @@ class MultiGraphContainer(QWidget):
         )
         self.__configurationDialog=configuration.Configuration(self.__changeToGraphsHandler,self.__changeToEncephalogramsHandler)
         self.__recordPauseIcons=[QIcon('../../Public/Images/recordIcon.png'),QIcon('../../Public/Images/pauseIcon.png')]
-    def __changeToGraphsHandler(self):
+    def __changeToGraphsHandler(self,key):
         print 'changeToGraphsHandler'
-        self.__hideEncephalogram()
+        self.__hideEncephalogram(key)
         self.__showGraphs()
 
-    def __hideEncephalogram(self):
-        self.__graphLayout.removeWidget(self.__encephalogram)
-        self.__encephalogram.hide()
+    def __hideEncephalogram(self,key):
+        if key in self.__encephalograms:
+            self.__graphLayout.removeWidget(self.__encephalograms[key])
+            self.__encephalograms[key].hide()
 
-    def __changeToEncephalogramsHandler(self):
+    def __changeToEncephalogramsHandler(self,lastKey,key):
         print 'changeToEncephalogramsHandler'
+        if lastKey!='':
+            self.__hideEncephalogram(lastKey)
         self.__hideGraphs()
-        self.__showEncephalogram()
+        self.__showEncephalogram(key)
 
-    def __showEncephalogram(self):
-        self.__graphLayout.insertWidget(0,self.__encephalogram)
-        self.__encephalogram.show()
+    def __showEncephalogram(self,key):
+         if key in self.__encephalograms:
+            self.__graphLayout.insertWidget(0,self.__encephalograms[key])
+            self.__encephalograms[key].show()
 
     def onClickConfiguration(self):
         self.__configurationDialog.open()
@@ -82,18 +92,22 @@ class MultiGraphContainer(QWidget):
         bookmarkButton.setIcon(QIcon('../../Public/Images/bookmarkIcon.png'))
         bookmarkButton.setIconSize(iconSize)
         bookmarkButton.setStyleSheet(buttonStyleSheet)
+        bookmarkButton.setToolTip('Agregar Nota a Grafica')
+        bookmarkButton.setEnabled(False)
         graphControlsLayout.addWidget(bookmarkButton)
         self.__recordButton=QPushButton()
         self.__recordButton.setIcon(self.__recordPauseIcons[0])
         self.__recordButton.setIconSize(iconSize)
         self.__recordButton.clicked.connect(self.__togglePause)
         self.__recordButton.setStyleSheet(buttonStyleSheet)
+        self.__recordButton.setToolTip(self.__recordPauseTooltipTexts[0])
         graphControlsLayout.addWidget(self.__recordButton)
         configurationButton=QPushButton()
         configurationButton.setIcon(QIcon('../../Public/Images/configurationIcon.png'))
         configurationButton.setIconSize(iconSize)
         configurationButton.setStyleSheet(buttonStyleSheet)
         configurationButton.clicked.connect(self.onClickConfiguration)
+        configurationButton.setToolTip('Cambiar Tipo de Graficacion')
         graphControlsLayout.addWidget(configurationButton)
         self.__graphLayoutWidget=QWidget()
         self.__graphLayoutWidget.setLayout(graphControlsLayout)
@@ -107,5 +121,6 @@ class MultiGraphContainer(QWidget):
     def __togglePause(self):
         self.__setPause(not self.__getPause())
         self.__recordButton.setIcon(self.__recordPauseIcons[not self.__getPause()])
+        self.__recordButton.setToolTip(self.__recordPauseTooltipTexts[not self.__getPause()])
     def getWidget(self):
         return self.__mainWidget

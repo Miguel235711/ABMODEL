@@ -1,16 +1,27 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
 
 class Pantalla(QWidget):
-    def __init__(self,changeToMainMenu,username):
+    def __init__(self,changeToMainMenu,changeToGrapher,username):
         super(QWidget,self).__init__()
         print 'user menu received',username
         self.__changeToMainMenu=changeToMainMenu
+        self.__changeToGrapher=changeToGrapher
         self.__username=username
         self.initUI()
     def initUI(self):
         self.InputDialog()
+    def __getFile(self):
+        fileInfo=QFileDialog.getOpenFileName(self,"Selecciona Archivo","","Files (*.csv)")
+        return(fileInfo[0])
+    def __openFile(self):
+        filePath=self.__getFile()
+        tokens=filePath.split('.')
+        if not tokens or tokens[len(tokens)-1]=='csv':
+            self.__changeToGrapher(self.__username,filePath)
+        else:
+            self.showDialog("Error", "El archivo seleccionado no tiene una extension valida, seleccione un archivo .csv" ,QMessageBox.Information)
     def InputDialog(self):
         inputLayout=QVBoxLayout()
         self.setLayout(inputLayout)
@@ -21,16 +32,21 @@ class Pantalla(QWidget):
         title.setAlignment(Qt.AlignCenter)
 
         inputLayout.addWidget(title)
-        welcome=QLabel("Bievenido: "+self.__username)
+        welcome=QLabel("Bievenido: "+str(self.__username))
         welcome.resize(1920,670)
         welcome.setFont(QFont('SansSerif', 25))
         welcome.setAlignment(Qt.AlignCenter)
 
         inputLayout.addWidget(welcome)
 
-        inputLayout.addWidget(QPushButton('Nuevo Archivo'))
-
-        inputLayout.addWidget(QPushButton('Abrir Archivo'))
+        QPushButton('Nuevo Archivo')
+        newFileButton=QPushButton('Nuevo Archivo')
+        newFileButton.setEnabled(False)
+        inputLayout.addWidget(newFileButton)
+        
+        openFileButton=QPushButton('Abrir Archivo')
+        openFileButton.clicked.connect(self.__openFile)
+        inputLayout.addWidget(openFileButton)
 
         btn = QPushButton('Cerrar Sesion',self)
         btn.clicked.connect(self.__changeToMainMenu)
@@ -54,18 +70,6 @@ class Pantalla(QWidget):
         }
         """)
         #btn.move(1000,600)
-
-    def comprobarUsuarioContra(self,user,contra):
-        if(len(user) < 8 or len(contra) < 8):
-            self.showDialog("Estatus de registro", "Usuario/Contrasena muy corto",QMessageBox.Warning)
-        else:
-            self.showDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente" ,QMessageBox.Information)
-            file = open("../Usuarios.txt","a")
-
-            file.write(auMain.main(str(user),str(contra))+"\n")
-            file.close()
-            
-    
     def showDialog(self,titulo,textoCuerpo,icon):
         dialog = QMessageBox()
         dialog.setWindowTitle(titulo)

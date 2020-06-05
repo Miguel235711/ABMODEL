@@ -17,8 +17,11 @@ class UserInfo(QWidget):
     margin-bottom:20px;
     """
 
-    def __init__(self):
+    def __init__(self,username,filePath):
         super(QWidget,self).__init__()
+        self.__username=username
+        self.__filePath=filePath
+        self.setToolTip('Archivo: <b>'+filePath+'</b>')
         self.__initLayout()
     def __initLayout(self):
 
@@ -48,7 +51,8 @@ class UserInfo(QWidget):
         filaNameLabel=QLabel('Archivo: ')
         filaNameLabel.setStyleSheet(UserInfo.labelStyleSheet+UserInfo.allInfoChildSheet)
         horizontalLayout.addWidget(filaNameLabel)
-        self.__fileName=QLabel('Registro de Torybio')
+        beg=max(0,len(self.__filePath)-120)
+        self.__fileName=QLabel(('...' if beg>0 else '')+self.__filePath[beg:])
         horizontalLayout.addWidget(self.__fileName)
         self.__fileName.setStyleSheet(UserInfo.allInfoChildSheet)
 
@@ -66,7 +70,7 @@ class UserInfo(QWidget):
         userNameLabel=QLabel('Usuario: ')
         userNameLabel.setStyleSheet(UserInfo.labelStyleSheet+UserInfo.allInfoChildSheet)
         horizontalLayout.addWidget(userNameLabel)
-        self.__userName=QLabel('Torybio1302')
+        self.__userName=QLabel(self.__username)
         horizontalLayout.addWidget(self.__userName)
         self.__userName.setStyleSheet(UserInfo.allInfoChildSheet)
 

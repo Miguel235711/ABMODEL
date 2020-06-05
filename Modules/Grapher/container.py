@@ -7,9 +7,11 @@ import menu
 import userInfo
 
 class Container(QWidget):
-    def __init__(self,app):
+    def __init__(self,changeToUserMenu,username,filePath,app):
         super(QWidget,self).__init__()
-        self.__dialogWindow=menu.Menu()
+        self.__username=username
+        self.__filePath=filePath
+        self.__dialogWindow=menu.Menu(changeToUserMenu,username,filePath)
         self.__graphsWidget=multiGraphContainer.MultiGraphContainer(app)
         self.__initUI()
     def initGraphs(self,data):
@@ -39,7 +41,7 @@ class Container(QWidget):
         #user info
         spLeft=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
         spLeft.setHorizontalStretch(3)
-        userInfoWidgetInstance=userInfo.UserInfo()
+        userInfoWidgetInstance=userInfo.UserInfo(self.__username,self.__filePath)
         userInfoWidgetInstance.setSizePolicy(spLeft)
         self.__menuBarLayout.addWidget(userInfoWidgetInstance)
 

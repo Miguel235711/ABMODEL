@@ -5,11 +5,12 @@ from PyQt5.QtCore import *
 import sys
 
 class Pantalla(QWidget):
-    def __init__(self,changeToLoIn,changeToRegister):
+    def __init__(self,changeToLoIn,changeToRegister,endApp):
         print('__init__() menuMain.py')
         super(QWidget, self).__init__()
         self.__changeToLogIn=changeToLoIn
         self.__changeToRegister=changeToRegister
+        self.__endApp=endApp
         self.initUI()
 
     def initUI(self):
@@ -60,6 +61,13 @@ class Pantalla(QWidget):
         btnRegistro.resize(250, 75)
         btnRegistro.setFont(QFont('SansSerif', 18))
         btnRegistro.clicked.connect(self.__changeToRegister)
+
+        btnRegistro = QPushButton('Salir', self)
+        btnRegistro.move(positionX, positionY + 200)
+        btnRegistro.resize(250, 75)
+        btnRegistro.setFont(QFont('SansSerif', 18))
+        btnRegistro.clicked.connect(self.__endApp)
+
     def comprobarUsuarioContra(self, user, contra):
         print ('comprobarUsuarioContra() menuMain.py')
         if (len(user) < 8 or len(contra) < 8):

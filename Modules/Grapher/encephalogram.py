@@ -3,11 +3,11 @@ from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.QtCore import QSize
 
 class Encephalogram(QWidget):
-    def __init__(self):
+    def __init__(self,imagePath):
         super(QWidget,self).__init__()
-        image=QPixmap('../../Public/Images/electroEncephalogram1Icon.png')
+        image=QPixmap(imagePath)
         imageLabel=QLabel()
-        imageLabel.setPixmap(image.scaled(1500,600))
+        imageLabel.setPixmap(image.scaled(1500,800))
         self.__layout=QVBoxLayout()
         self.setLayout(self.__layout)
         self.__layout.addWidget(imageLabel)
