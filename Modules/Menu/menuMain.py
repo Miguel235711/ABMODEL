@@ -3,20 +3,23 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QMes
 from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtCore import *
 import sys
-sys.path.append("../Registration")
-import mainRe
 
 class Pantalla(QWidget):
-    def __init__(self):
+    def __init__(self,changeToLoIn,changeToRegister):
+        print('__init__() menuMain.py')
         super(QWidget, self).__init__()
+        self.__changeToLogIn=changeToLoIn
+        self.__changeToRegister=changeToRegister
         self.initUI()
 
     def initUI(self):
+        print('initUI() menuMain.py')
         self.SetTittle()
         self.InputDialog()
         self.initWindowUILayout()
 
     def initWindowUILayout(self):
+        print('initWindowUILayout() menuMain.py')
         self.mainLayout = QHBoxLayout()
         self.graphLayout = QVBoxLayout()
         self.contectivityLayout = QVBoxLayout()
@@ -25,6 +28,7 @@ class Pantalla(QWidget):
         self.setLayout(self.mainLayout)
 
     def SetTittle(self):
+        print('SetTitle()menuMain.py')
         l1 = QLabel(self)
         l1.setText("ABMODEL SYSTEM")
         l1.move(0, 0)
@@ -40,21 +44,24 @@ class Pantalla(QWidget):
         l2.setFont(QFont('SansSerif', 25))
 
     def InputDialog(self):
+        print('InputDialog() menuMain.py')
         positionY = 450
         positionX = 830
         btnOk = QPushButton('Iniciar Sesión', self)
         btnOk.move(positionX, positionY)
         btnOk.resize(250, 75)
         btnOk.setFont(QFont('SansSerif', 18))
-        btnOk.clicked.connect(self.openArchivoMain)
+        #btnOk.clicked.connect(self.openArchivoMain)
+        btnOk.clicked.connect(self.__changeToLogIn)
         #btnOk.clicked.connect(self.comprobarUsuarioContra())
 
         btnRegistro = QPushButton('Registrarse', self)
         btnRegistro.move(positionX, positionY + 100)
         btnRegistro.resize(250, 75)
         btnRegistro.setFont(QFont('SansSerif', 18))
-
+        btnRegistro.clicked.connect(self.__changeToRegister)
     def comprobarUsuarioContra(self, user, contra):
+        print ('comprobarUsuarioContra() menuMain.py')
         if (len(user) < 8 or len(contra) < 8):
             self.showDialog("Estatus de registro", "Usuario/Contrasena muy corto", QMessageBox.Warning)
         else:
@@ -63,12 +70,10 @@ class Pantalla(QWidget):
             file = open("../Usuarios.txt", "a")
             file.write(user + "\n" + contra + "\n")
             file.close()
-
-    def openArchivoMain(self):
-        print "Hello World"
-        mainRe.main()
+        #mainRe.MainRe.main()
 
     def showDialog(self, titulo, textoCuerpo, icon):
+        print('showDialog() menuMain.py')
         dialog = QMessageBox()
         dialog.setWindowTitle(titulo)
         dialog.setText(textoCuerpo)

@@ -2,15 +2,11 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMess
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
 
-import sys
-sys.path.append("../Authentication")
-import authenticationMain as auMain
-
 class Pantalla(QWidget):
-    def __init__(self):
+    def __init__(self,changeToMainMenu):
         super(QWidget,self).__init__()
+        self.__changeToMainMenu=changeToMainMenu
         self.initUI()
-
     def initUI(self):
         self.SetTittle()
         self.InputDialog()
@@ -72,6 +68,7 @@ class Pantalla(QWidget):
         btnOk.clicked.connect(lambda: self.comprobarUsuarioContra(usrInput.text(),passInput.text()))
 
         btn = QPushButton('Cancelar',self)
+        btn.clicked.connect(self.__changeToMainMenu)
         btn.move(1000,650)
 
     def comprobarUsuarioContra(self,user,contra):
