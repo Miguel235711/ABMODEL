@@ -3,16 +3,21 @@ from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
 
 class Pantalla(QWidget):
-    def __init__(self):
+    def __init__(self,changeToMainMenu,changeToUserMenu):
+        print ('__init__() LogInMain')
         super(QWidget,self).__init__()
+        self.__changeToUserMenu=changeToUserMenu
+        self.__changeToMainMenu=changeToMainMenu
         self.initUI()
 
     def initUI(self):
+        print ('initUI() LogInMain')
         self.SetTittle()
         self.InputDialog()
         self.initWindowUILayout()
 
     def initWindowUILayout(self):
+        print ('initWindowsUILayout() LogInMain')
         self.mainLayout=QHBoxLayout()
         self.graphLayout=QVBoxLayout()
         self.contectivityLayout=QVBoxLayout()
@@ -21,6 +26,7 @@ class Pantalla(QWidget):
         self.setLayout(self.mainLayout)
 
     def SetTittle(self):
+        print ('SetTitle() LogInMain')
         l1 = QLabel(self)
         l1.setText("ABMODEL SYSTEM")
         l1.move(0,0)
@@ -36,6 +42,7 @@ class Pantalla(QWidget):
         l2.setFont(QFont('SansSerif', 25))
 
     def InputDialog(self):
+        print ('InputDialog() LogInMain')
         usrInputText = QLabel(self)
         usrInputText.setText("Usuario :")
         usrInputText.move(-100,450)
@@ -68,9 +75,11 @@ class Pantalla(QWidget):
         btnOk.clicked.connect(lambda: self.comprobarUsuarioContra(usrInput.text(),passInput.text()))
 
         btn = QPushButton('Cancelar',self)
+        btn.clicked.connect(self.__changeToMainMenu)
         btn.move(1000,650)
 
     def comprobarUsuarioContra(self,user,contra):
+        print ('comprobarUsuarioContra() LogInMain')
         file = open("../Usuarios.txt","r")
         m = file.readlines()
         #     []
@@ -99,6 +108,7 @@ class Pantalla(QWidget):
                     print("Usuario registrado")
                     self.showDialog("Inicio de sesion", "Usuario Registrado",QMessageBox.Information)
                     # Funcinamiento para entrar al menu
+                    self.__changeToUserMenu(user)
                     return
                 else:
                     self.showDialog("Inicio de sesion", "Contrasena Incorrecta",QMessageBox.Warning)
@@ -109,6 +119,7 @@ class Pantalla(QWidget):
             
     
     def showDialog(self,titulo,textoCuerpo,icon):
+        print ('showDialog() LogInMain')
         dialog = QMessageBox()
         dialog.setWindowTitle(titulo)
         dialog.setText(textoCuerpo)
