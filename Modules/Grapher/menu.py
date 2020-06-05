@@ -15,6 +15,23 @@ class Menu(QDialog):
         mainLayout=QVBoxLayout()
 
         #initialize sub-layouts
+        self.setStyleSheet("""
+        QPushButton{
+            border-radius:20px;
+            background-color:white;
+            padding: 10px;
+            border-width:1.5px;
+            border-color:black;
+            border-style: outset;
+            font: bold 30px;
+            margin-top:20px;
+            margin-bottom:20px;
+            margin-right:80px;
+        }
+        QPushButton:hover {
+            background: rgb(230,230,230)
+        }
+        """)
 
         fileNameLayout=QHBoxLayout()
         pacientLayout=QHBoxLayout()
@@ -54,10 +71,12 @@ class Menu(QDialog):
         returnButton=QPushButton('Regresar')
         saveAndreturnButtonLayout.addWidget(saveButton)
         saveAndreturnButtonLayout.addWidget(returnButton)
-
+        #saveAndreturnButtonLayout.setAlignment(saveButton,Qt.AlignHCenter)
+        #saveAndreturnButtonLayout.setAlignment(returnButton,Qt.AlignHCenter)
         #exitButton
 
         exitButton=QPushButton('Salir')
+        #exitButton.setAlignment()
 
         #adding sublayouts to mainLayout
 
@@ -67,4 +86,5 @@ class Menu(QDialog):
         mainLayout.addLayout(filePathLayout)
         mainLayout.addLayout(saveAndreturnButtonLayout)
         mainLayout.addWidget(exitButton)
+        mainLayout.setAlignment(exitButton,Qt.AlignHCenter)
         self.setLayout(mainLayout)
