@@ -2,6 +2,10 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMess
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
 
+import sys
+sys.path.append("../Authentication")
+import authenticationMain as auMain
+
 class Pantalla(QWidget):
     def __init__(self):
         super(QWidget,self).__init__()
@@ -76,8 +80,9 @@ class Pantalla(QWidget):
         else:
             self.showDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente" ,QMessageBox.Information)
             file = open("../Usuarios.txt","a")
-            file.write(user+":"+contra+"\n")
-            file.close() 
+
+            file.write(auMain.main(str(user),str(contra))+"\n")
+            file.close()
             
     
     def showDialog(self,titulo,textoCuerpo,icon):
