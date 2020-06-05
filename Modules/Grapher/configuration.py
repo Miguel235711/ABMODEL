@@ -12,14 +12,15 @@ class Configuration(QDialog):
         self.initDialogWindow()
         self.__changeToGraphHandler=changeToGraphHandler
         self.__changeToEncephalogramHandler=changeToEncephalogramHandler
+        self.__currentTrueRadioButtonKey=''
     def __selectMode(self,key):
         print 'key: ',key
         if key != self.__currentTrueRadioButtonKey:
             #make changes
             if key=='Grafica':
-                self.__changeToGraphHandler()
+                self.__changeToGraphHandler(self.__currentTrueRadioButtonKey)
             else:
-                self.__changeToEncephalogramHandler()
+                self.__changeToEncephalogramHandler(self.__currentTrueRadioButtonKey,key)
             self.__currentTrueRadioButtonKey=key
     def initDialogWindow(self):
         #mainLayout initialization

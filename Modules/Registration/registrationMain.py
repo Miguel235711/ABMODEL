@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
+import sys
+sys.path.append("../Authentication")
+import authenticationMain as auMain
 
 class Pantalla(QWidget):
     def __init__(self,changeToMainMenu):
@@ -75,12 +78,13 @@ class Pantalla(QWidget):
         if(len(user) < 8 or len(contra) < 8):
             self.showDialog("Estatus de registro", "Usuario/Contrasena muy corto",QMessageBox.Warning)
         else:
-            self.showDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente" ,QMessageBox.Information)
             file = open("../Usuarios.txt","a")
-
-            file.write(auMain.main(str(user),str(contra))+"\n")
+            print 'user:',user,'password:',contra
+            #file.write(auMain.main(str(user),str(contra))+"\n")
+            file.write(str(user)+":"+str(contra)+"\n")
             file.close()
-            
+            self.showDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente" ,QMessageBox.Information)
+            self.__changeToMainMenu()
     
     def showDialog(self,titulo,textoCuerpo,icon):
         dialog = QMessageBox()

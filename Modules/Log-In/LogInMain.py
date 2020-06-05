@@ -106,7 +106,7 @@ class Pantalla(QWidget):
             if(userRegistrados[i] == user):
                 if(contraRegistradas[i] == contra):
                     print("Usuario registrado")
-                    self.showDialog("Inicio de sesion", "Usuario Registrado",QMessageBox.Information)
+                    self.showDialog("Inicio de sesion", "Iniciando Sesion...",QMessageBox.Information)
                     # Funcinamiento para entrar al menu
                     self.__changeToUserMenu(user)
                     return
