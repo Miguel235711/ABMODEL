@@ -1,6 +1,7 @@
+#include <QPen>
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
-from PyQt5.QtGui import QIcon,QPixmap
-from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QIcon,QPixmap, QPen, QPainter
+from PyQt5.QtCore import QSize, Qt
 from math import ceil
 
 def factor(deltaX,x):
@@ -26,10 +27,12 @@ class Encephalogram(QWidget):
         super(QWidget,self).__init__()
         image=QPixmap(imagePath)
         imageLabel=QLabel('Hello')
+        imageLabel.setAlignment(Qt.AlignCenter)
         rgbValue = normalizedValueToBlueRedScale(0.8)
         imageLabel.setStyleSheet("color: rgb("+str(rgbValue[0])+","+str(rgbValue[1])+","+str(rgbValue[2])+");")
-        #imageLabel.setPixmap(image.scaled(1500,800))
-        self.__layout=QVBoxLayout()
+        imageLabel.setPixmap(image.scaled(465,466))
+        self.__layout=QHBoxLayout()
         self.setLayout(self.__layout)
+        #self.__layout.setAlignment(Qt.AlignCenter)
         self.__layout.addWidget(imageLabel)
         #icon.setIconSize(QSize(600,600))
