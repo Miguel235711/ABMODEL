@@ -16,10 +16,15 @@ class MultiGraphContainer(QWidget):
         self.__graphs=[]
         self.__graphLayout=QVBoxLayout()
         self.__encephalograms={
-            'Alpha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram1Icon.png'),
-            'Betha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram2Icon.png'),
-            'Delta':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram3Icon.png'),
-            'Gamma':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram4Icon.png')
+            # 'Alpha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram1Icon.png'),
+            # 'Betha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram2Icon.png'),
+            # 'Delta':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram3Icon.png'),
+            # 'Gamma':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram4Icon.png')
+
+            'Alpha':encephalogram.Encephalogram('../../Public/Images/Brain.png'),
+            'Betha':encephalogram.Encephalogram('../../Public/Images/Brain.png'),
+            'Delta':encephalogram.Encephalogram('../../Public/Images/Brain.png'),
+            'Gamma':encephalogram.Encephalogram('../../Public/Images/Brain.png')
         }
         self.__mainWidget=QWidget(self)
         self.__mainWidget.setLayout(self.__graphLayout)
