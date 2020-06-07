@@ -27,11 +27,7 @@ class Graph():
         label.setStyleSheet("""
             color:black;
             font: bold;"""+
-            backgroundColor+
-        """
-            height: 30px;
-            text-align:center;
-        """)
+            backgroundColor)
         mainLayout.addWidget(label)
         self.__graph.setMouseTracking(True)
         self.__graph.scene().sigMouseClicked.connect(self.mouseClick)

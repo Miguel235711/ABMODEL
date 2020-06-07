@@ -14,13 +14,14 @@ class Pantalla(QWidget):
         self.InputDialog()
     def __getFile(self):
         fileInfo=QFileDialog.getOpenFileName(self,"Selecciona Archivo","","Files (*.csv)")
-        return(fileInfo[0])
+        print fileInfo
+        return (True if fileInfo[1]!='' else False,fileInfo[0])
     def __openFile(self):
-        filePath=self.__getFile()
-        tokens=filePath.split('.')
+        filePathAns=self.__getFile()
+        tokens=filePathAns[1].split('.')
         if not tokens or tokens[len(tokens)-1]=='csv':
-            self.__changeToGrapher(self.__username,filePath)
-        else:
+            self.__changeToGrapher(self.__username,filePathAns[1])
+        elif filePathAns[0]:
             self.showDialog("Error", "El archivo seleccionado no tiene una extension valida, seleccione un archivo .csv" ,QMessageBox.Information)
     def InputDialog(self):
         inputLayout=QVBoxLayout()
@@ -29,29 +30,29 @@ class Pantalla(QWidget):
         title=QLabel("ABMODEL SYSTEM")
         title.resize(1920,540)
         title.setFont(QFont('SansSerif', 50))
-        title.setAlignment(Qt.AlignCenter)
+        title.setAlignment(Qt.AlignHCenter)
 
-        inputLayout.addWidget(title)
+        inputLayout.addWidget(title,Qt.AlignHCenter)
         welcome=QLabel("Bievenido: "+str(self.__username))
         welcome.resize(1920,670)
         welcome.setFont(QFont('SansSerif', 25))
-        welcome.setAlignment(Qt.AlignCenter)
+        welcome.setAlignment(Qt.AlignHCenter)
 
-        inputLayout.addWidget(welcome)
+        inputLayout.addWidget(welcome,Qt.AlignHCenter)
 
         QPushButton('Nuevo Archivo')
         newFileButton=QPushButton('Nuevo Archivo')
         newFileButton.setEnabled(False)
-        inputLayout.addWidget(newFileButton)
+        inputLayout.addWidget(newFileButton,Qt.AlignHCenter)
         
         openFileButton=QPushButton('Abrir Archivo')
         openFileButton.clicked.connect(self.__openFile)
-        inputLayout.addWidget(openFileButton)
+        inputLayout.addWidget(openFileButton,Qt.AlignHCenter)
 
         btn = QPushButton('Cerrar Sesion',self)
         btn.clicked.connect(self.__changeToMainMenu)
-        inputLayout.addWidget(btn)
-
+        inputLayout.addWidget(btn,Qt.AlignHCenter)
+        inputLayout.setAlignment(Qt.AlignHCenter)
         self.setStyleSheet("""
         QPushButton{
             border-radius:20px;
