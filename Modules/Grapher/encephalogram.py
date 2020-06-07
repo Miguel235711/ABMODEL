@@ -42,7 +42,7 @@ class Encephalogram(QWidget):
     def __updateImage(self):
         self.__imageLabel.setPixmap(QtGui.QPixmap.fromImage(ImageQt(self.__im)).scaled(465,466))
 
-    def __init__(self,imagePath,app):
+    def __init__(self,imagePath,app,name,color):
         #data =[(time0,[val0,val1,...,val31]),(time1,[val0,val1,...,val31]),...]
         super(QWidget,self).__init__()
         #imageLabel.setAlignment(Qt.AlignCenter)
@@ -50,8 +50,25 @@ class Encephalogram(QWidget):
         #imageLabel.setStyleSheet("color: rgb("+str(rgbValue[0])+","+str(rgbValue[1])+","+str(rgbValue[2])+");")
         #imageLabel.setPixmap(image.scaled(465,466))
         self.__app=app
-        self.__layout=QHBoxLayout()
-        self.setLayout(self.__layout)
+        self.__mainLayout=QVBoxLayout()
+        self.__encephalogramLayout=QHBoxLayout()
+        self.__titleLayout=QHBoxLayout()
+        label=QLabel(name)
+        label.setFixedSize(200,100)
+        label.setAlignment(Qt.AlignCenter)
+        backgroundColor="background:rgb"+"("+str(color[0])+","+str(color[1])+","+str(color[2])+");"
+        print backgroundColor
+        label.setStyleSheet("""
+            color:black;
+            font: bold 50px;"""+
+            backgroundColor)
+        self.__mainLayout.addWidget(label,alignment=Qt.AlignHCenter)
+        self.__mainLayout.addLayout(self.__encephalogramLayout)
+        self.__timeLabel=QLabel('Tiempo: 00.00s')
+        self.__timeLabel.setAlignment(Qt.AlignCenter)
+        self.__mainLayout.addWidget(self.__timeLabel,alignment=Qt.AlignHCenter)
+        self.setLayout(self.__mainLayout)
+        self.__mainLayout.setAlignment(Qt.AlignCenter)
         self.__i=0
         #self.__layout.setAlignment(Qt.AlignCenter)
         #icon.setIconSize(QSize(600,600))
@@ -65,7 +82,10 @@ class Encephalogram(QWidget):
             for coordinate in self.__nodes:
                 self.__draw.ellipse((coordinate[0] - self.__radius, coordinate[1] - self.__radius, coordinate[0] + self.__radius, coordinate[1] + self.__radius), fill = (0,0,0))
             self.__imageLabel=QLabel()
-            self.__layout.addWidget(self.__imageLabel)
+            self.__encephalogramLayout.addWidget(self.__imageLabel)
+            scale=QLabel()
+            scale.setPixmap(QPixmap('../../Public/Images/encephalogramScaleIcon.png').scaled(100,500))
+            self.__encephalogramLayout.addWidget(scale)
             self.__updateImage()
     @QtCore.pyqtSlot()
     def setPause(self,pause):

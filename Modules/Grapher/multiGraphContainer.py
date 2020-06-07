@@ -9,25 +9,17 @@ import encephalogram
 
 class MultiGraphContainer(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
-    __graphNames=['BETA','ALPHA','GAMMA','DELTA']
-    __encephalogramNames=['Alpha','Betha','Delta','Gamma']
+    __graphNames=['THETA','ALPHA','BETA','DELTA']
+    __encephalogramNames=['Theta','Alpha','Beta','Delta']
     __recordPauseTooltipTexts=['Iniciar/Continuar Grabacion de Ondas','Detener Grabacion de Ondas']
     def __init__(self,app):
         super(QWidget,self).__init__()
         self.__app=app
         self.__graphs=[]
         self.__graphLayout=QVBoxLayout()
-        self.__encephalograms={
-            # 'Alpha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram1Icon.png'),
-            # 'Betha':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram2Icon.png'),
-            # 'Delta':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram3Icon.png'),
-            # 'Gamma':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram4Icon.png')
-
-            'Alpha':encephalogram.Encephalogram('../../Public/Images/Brain.png',app),
-            'Betha':encephalogram.Encephalogram('../../Public/Images/Brain.png',app),
-            'Delta':encephalogram.Encephalogram('../../Public/Images/Brain.png',app),
-            'Gamma':encephalogram.Encephalogram('../../Public/Images/Brain.png',app)
-        }
+        self.__encephalograms={}
+        for i,encephalogramName in enumerate(self.__encephalogramNames):
+            self.__encephalograms[encephalogramName]=encephalogram.Encephalogram('../../Public/Images/Brain.png',app,self.__graphNames[i],self.__waveColors[i])
         self.__mainWidget=QWidget(self)
         self.__mainWidget.setLayout(self.__graphLayout)
         self.__mainWidget.setObjectName('mainWidget')

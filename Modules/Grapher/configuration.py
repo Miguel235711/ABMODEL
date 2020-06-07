@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from functools import partial
 
 class Configuration(QDialog):
-    __modes=['Grafica','Alpha','Betha','Delta','Gamma']
+    __modes=['Grafica','Theta','Alpha','Beta','Delta']
     def __init__(self,changeToGraphHandler,changeToEncephalogramHandler):
         super(QDialog,self).__init__(None,Qt.WindowStaysOnTopHint | Qt.WindowSystemMenuHint| Qt.WindowCloseButtonHint)
         self.setWindowTitle('Configuracion')
