@@ -10,6 +10,7 @@ class File:
     amountOfSensors=None
     #amount of waves 
     amountOfWaves=4
+    __maxVal=10
 
     def __init__(self,fileLocation):
         self.fileLocation=fileLocation
@@ -33,8 +34,11 @@ class File:
             ans[i]/=self.amountOfSensors
         return (float(self.dataRows[row][0]),ans)
     
-    def getAllData(self):
+    def getAverageData(self):
         return [self.getAverageOfWavesAndTime(i) for i in xrange(len(self.dataRows))]
-
+    def __getNormalizedWaveValuesPerNode(self,i):
+        return [ (float(self.dataRows[row][0]),[max(0,min(float(self.dataRows[row][col])/self.__maxVal,self.__maxVal)) for col in xrange(i+1,len(self.dataRows[row]),4)]) for row in xrange(len(self.dataRows))]
+    def getNormalizedNodeData(self):
+        return [self.__getNormalizedWaveValuesPerNode(i) for i in xrange(self.amountOfWaves)]
     
             
