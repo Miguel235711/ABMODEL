@@ -14,8 +14,8 @@ class Container(QWidget):
         self.__dialogWindow=menu.Menu(changeToUserMenu,username,filePath)
         self.__graphsWidget=multiGraphContainer.MultiGraphContainer(app)
         self.__initUI()
-    def initGraphs(self,data):
-        self.__graphsWidget.initGraphs(data)
+    def initGraphsAndEncephalograms(self,graphData,encephalogramData):
+        self.__graphsWidget.initGraphsAndEncephalograms(graphData,encephalogramData)
 
     def onClickMenuButton(self):
         print 'Menu Button Clicked'

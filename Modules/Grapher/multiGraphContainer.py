@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.QtCore import QSize,QThreadPool
+from random import random
 
 import graph 
 import configuration
@@ -9,6 +10,7 @@ import encephalogram
 class MultiGraphContainer(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
     __graphNames=['BETA','ALPHA','GAMMA','DELTA']
+    __encephalogramNames=['Alpha','Betha','Delta','Gamma']
     __recordPauseTooltipTexts=['Iniciar/Continuar Grabacion de Ondas','Detener Grabacion de Ondas']
     def __init__(self,app):
         super(QWidget,self).__init__()
@@ -21,10 +23,10 @@ class MultiGraphContainer(QWidget):
             # 'Delta':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram3Icon.png'),
             # 'Gamma':encephalogram.Encephalogram('../../Public/Images/electroEncephalogram4Icon.png')
 
-            'Alpha':encephalogram.Encephalogram('../../Public/Images/Brain.png'),
-            'Betha':encephalogram.Encephalogram('../../Public/Images/Brain.png'),
-            'Delta':encephalogram.Encephalogram('../../Public/Images/Brain.png'),
-            'Gamma':encephalogram.Encephalogram('../../Public/Images/Brain.png')
+            'Alpha':encephalogram.Encephalogram('../../Public/Images/Brain.png',app),
+            'Betha':encephalogram.Encephalogram('../../Public/Images/Brain.png',app),
+            'Delta':encephalogram.Encephalogram('../../Public/Images/Brain.png',app),
+            'Gamma':encephalogram.Encephalogram('../../Public/Images/Brain.png',app)
         }
         self.__mainWidget=QWidget(self)
         self.__mainWidget.setLayout(self.__graphLayout)
@@ -79,13 +81,15 @@ class MultiGraphContainer(QWidget):
             self.__graphLayout.removeWidget(self.__graphs[i].getGraph())
             self.__graphs[i].getGraph().hide()
 
-    def initGraphs(self,data):
+    def initGraphsAndEncephalograms(self,graphData,encephalogramData):
         #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
-        print 'initGraphsCalled'
+        print 'initGraphsCalled\n\n\n'
         for i in range(4):
-            self.__graphs.append(graph.Graph([pair[0] for pair in data ],[pair[1][i] for pair in data],self.__waveColors[i],self.__app,self.__graphNames[i]))
+            self.__graphs.append(graph.Graph([pair[0] for pair in graphData ],[pair[1][i] for pair in graphData],self.__waveColors[i],self.__app,self.__graphNames[i]))
             self.__graphs[i].plotGraph()
             self.__graphLayout.addWidget(self.__graphs[i].getGraph())
+        for i,encephalogramName in enumerate(self.__encephalogramNames): 
+            self.__encephalograms[encephalogramName].initEncephalogram(encephalogramData[i])
         buttonStyleSheet="""
             QPushButton{
                 background: transparent;
@@ -121,6 +125,8 @@ class MultiGraphContainer(QWidget):
         self.__pause=pause
         for graph in self.__graphs:
             graph.setPause(pause)
+        for encephalogram in self.__encephalograms.values():
+            encephalogram.setPause(pause)
     def __getPause(self):
         return self.__graphs[0].getPause()
     def __togglePause(self):

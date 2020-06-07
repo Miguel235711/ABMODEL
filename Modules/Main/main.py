@@ -124,13 +124,14 @@ def changeToUserMenu(username):
 def changeToGrapher(username,filePath):
     global mainWindow,app
     cvFile=readCV(filePath)
-    data=cvFile.getAllData()
+    graphData=cvFile.getAverageData()
+    encephalogramData=cvFile.getNormalizedNodeData()
     containerInstance=container.Container(changeToUserMenu,username,filePath,app)
-    containerInstance.initGraphs(data)
+    containerInstance.initGraphsAndEncephalograms(graphData,encephalogramData)
     mainWindow.setGrapherAsCentralWidget(containerInstance)
     #print(data)
 def main():
-    global centralWidget,mainWindow,app
+    global mainWindow,app
     app=QApplication([])
     mainWindow=MainWindow('ABMODEL','../../Public/Images/cheese.jpg',menuMain.Pantalla(changeToLogIn,changeToRegister,endApp))
     #changeToGrapher()

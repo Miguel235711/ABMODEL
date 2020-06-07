@@ -1,48 +1,18 @@
 from PyQt5.QtWidgets import QWidget,QGraphicsProxyWidget,QPushButton,QLabel,QHBoxLayout
 from pyqtgraph import PlotWidget,mkPen,setConfigOption,TextItem
-from QtCore import QObject,pyqtSignal,QRectF,Qt
-from time import sleep
+from QtCore import QRectF,Qt
 from PyQt5 import QtCore
-from threading import Thread
+
+from threadWorker import Worker
 
 class Graph():
-    class Worker(QObject):
-        readyForNextPoint = pyqtSignal()
-        def __init__(self):
-            super(QObject,self).__init__()
-            self.__continue=True
-            self.__pause=True
-        def __changeFlagToFalse(self):
-            self.__continue=False
-        def startThread(self,timePoints,app):
-            #print 'inside Function()'
-            self.__timePoints=timePoints
-            self.__thread=Thread(target=self.__func)
-            app.aboutToQuit.connect(self.__changeFlagToFalse)
-            self.__thread.start()
-        def __func(self):
-            #print 'inside __func()'
-            lastTime=0
-            for time in self.__timePoints:
-                while(self.__pause):
-                    if not self.__continue:
-                        return
-                    sleep(1)
-                if not self.__continue:
-                    return
-                sleep(time-lastTime)
-                self.readyForNextPoint.emit()
-                lastTime=time
-        def setPause(self,pause):
-            self.__pause=pause
-        def getPause(self):
-            return self.__pause
     xDifLimit=8
     def mouseClick(self,event):
         print event
     def __init__(self,timePoints,wavePoints,waveColor,app,name):
         setConfigOption('background',(230,230,230))
         setConfigOption('foreground',(0,0,0))
+        self.__mkPen=mkPen(color=waveColor,width=3)
         self.__app=app
         mainLayout=QHBoxLayout()
         self.__mainWidget=QWidget()
@@ -90,28 +60,38 @@ class Graph():
         self.__worker.setPause(pause)
     def getPause(self):
         return self.__worker.getPause()
+    def __recalculateX0X1(self,lastTime):
+        first = self.__firstTime
+        x0= first if lastTime - first <= self.xDifLimit else lastTime - self.xDifLimit
+        x1= x0 + self.xDifLimit
+        self.__graph.setXRange(x0,x1)
+        print(x0,x1)
     def __plotNextPoint(self):
         #print 'inside __realTimePlotting()'
         #sleep(self.__timePoints[i]-lastTime)
-        self.__timePointsProgressive.append(self.__timePoints[self.__i])
-        self.__wavePointsProgressive.append(self.__wavePoints[self.__i])
-        last =self.__timePointsProgressive[len(self.__timePointsProgressive)-1]
-        first = self.__timePointsProgressive[0]
-        x0= first if last - first <= self.xDifLimit else last - self.xDifLimit
-        x1= x0 + self.xDifLimit
-        print(x0,x1)
+        if len(self.__timePointsProgressive) >= 10:
+                self.__timePointsProgressive.pop(0)
+                self.__wavePointsProgressive.pop(0)
+        if self.__i < len(self.__timePoints):
+            self.__timePointsProgressive.append(self.__timePoints[self.__i])
+            self.__wavePointsProgressive.append(self.__wavePoints[self.__i])
+        else:
+            self.__timePointsProgressive.append(self.__timePointsProgressive[len(self.__timePointsProgressive)-1]+0.250)
+            self.__wavePointsProgressive.append(0)
         if self.__i&1:
-            self.__graph.plot(self.__timePointsProgressive,self.__wavePointsProgressive,pen=mkPen(color=self.__waveColor,width=3))
-            self.__graph.setXRange(x0,x1)
+            self.__graph.plot(self.__timePointsProgressive,self.__wavePointsProgressive,pen=self.__mkPen)
+            self.__recalculateX0X1(self.__timePointsProgressive[len(self.__timePointsProgressive)-1])
         self.__i+=1
+        
     def plotGraph(self):
         #worker = self.Worker(self.__realTimePlotting)
         #threadPool.start(worker)
         #self.__realTimeGraphThread = Thread(target=self.realTimePlotting)
         #self.__realTimeGraphThread.start()
         #print 'inside plotGraph()'
-        self.__worker = self.Worker()
+        self.__worker = Worker()
         self.__worker.readyForNextPoint.connect(self.__plotNextPoint)
+        self.__firstTime=self.__timePoints[0]
         self.__worker.startThread(self.__timePoints,self.__app)
         #!self.__plottingThread = self.__QThreadImplementation(self.__realTimePlotting)
         #!self.__plottingThread.start()
