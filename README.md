@@ -8,6 +8,9 @@ Version: **Python 2.7**
       <li>
           Install qtgraph module: <i>pip install pyqtgraph</i>
       </li>
+      <li>
+          Install pillow for drawing: <i> pip install Pillow </i>
+      </li>
     </ul>
 2. <ins>**Run Code of a Module:**</ins>
     <ul>
