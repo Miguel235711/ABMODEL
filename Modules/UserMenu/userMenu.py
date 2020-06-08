@@ -4,6 +4,8 @@ from PyQt5.QtCore import *
 import sys
 sys.path.append("../CommonWidgets")
 import styles
+sys.path.append('../GlobalInstances')
+import globalInstances
 
 class Pantalla(QWidget):
     def __init__(self,changeToMainMenu,changeToGrapher,username):
@@ -12,6 +14,7 @@ class Pantalla(QWidget):
         self.__changeToMainMenu=changeToMainMenu
         self.__changeToGrapher=changeToGrapher
         self.__username=username
+        self.__dialog=globalInstances.GlobalInstances.getInstance('infoDialog')
         self.initUI()
     def initUI(self):
         self.InputDialog()
@@ -25,7 +28,7 @@ class Pantalla(QWidget):
         if not tokens or tokens[len(tokens)-1]=='csv':
             self.__changeToGrapher(self.__username,filePathAns[1])
         elif filePathAns[0]:
-            self.showDialog("Error", "El archivo seleccionado no tiene una extension valida, seleccione un archivo .csv" ,QMessageBox.Information)
+            self.__dialog.openWarningDialog("Error", "El archivo seleccionado no tiene una extension valida, seleccione un archivo .csv")
     def InputDialog(self):
         inputLayout=QVBoxLayout()
         self.setLayout(inputLayout)
@@ -57,10 +60,3 @@ class Pantalla(QWidget):
         inputLayout.setAlignment(Qt.AlignHCenter)
         self.setStyleSheet(styles.buttonStyleSheet)
         #btn.move(1000,600)
-    def showDialog(self,titulo,textoCuerpo,icon):
-        dialog = QMessageBox()
-        dialog.setWindowTitle(titulo)
-        dialog.setText(textoCuerpo)
-        dialog.setStyleSheet("QLabel{font-size: 16px;}")
-        dialog.setIcon(icon)
-        x = dialog.exec_()

@@ -13,6 +13,7 @@ class Pantalla(QWidget):
         self.__changeToLogIn=changeToLoIn
         self.__changeToRegister=changeToRegister
         self.__endApp=endApp
+        
         self.initUI()
 
     def initUI(self):
@@ -71,24 +72,3 @@ class Pantalla(QWidget):
         self.__mainLayout.addWidget(btnSalir,Qt.AlignHCenter)
         self.__mainLayout.setAlignment(Qt.AlignHCenter)
         self.setStyleSheet(styles.buttonStyleSheet)
-
-    def comprobarUsuarioContra(self, user, contra):
-        print ('comprobarUsuarioContra() menuMain.py')
-        if (len(user) < 8 or len(contra) < 8):
-            self.showDialog("Estatus de registro", "Usuario/Contrasena muy corto", QMessageBox.Warning)
-        else:
-            self.showDialog("Estatus de registro", "El usuario \"" + user + "\" ha sido registrado correctamente",
-                            QMessageBox.Information)
-            file = open("../Usuarios.txt", "a")
-            file.write(user + "\n" + contra + "\n")
-            file.close()
-        #mainRe.MainRe.main()
-
-    def showDialog(self, titulo, textoCuerpo, icon):
-        print('showDialog() menuMain.py')
-        dialog = QMessageBox()
-        dialog.setWindowTitle(titulo)
-        dialog.setText(textoCuerpo)
-        dialog.setStyleSheet("QLabel{font-size: 16px;}")
-        dialog.setIcon(icon)
-        x = dialog.exec_()
