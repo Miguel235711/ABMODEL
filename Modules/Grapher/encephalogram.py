@@ -9,6 +9,7 @@ from math import ceil
 from PIL import Image, ImageDraw
 from PIL.ImageQt import ImageQt
 from  threadWorker import Worker
+from datetime import timedelta
 #from random import random
 
 
@@ -38,7 +39,7 @@ class Encephalogram(QWidget):
         (270, 64), (270, 102), (235, 140), (287, 140), (335, 132), (318, 176), (262, 182), (235, 217),
         (294, 217), (353, 217), (324, 274), (262, 256), (286, 310), (347, 327), (259, 339), (269, 369)
     ]
-
+    __timePrefixLabel='Tiempo: '
     def __updateImage(self):
         self.__imageLabel.setPixmap(QtGui.QPixmap.fromImage(ImageQt(self.__im)).scaled(465,466))
 
@@ -53,6 +54,7 @@ class Encephalogram(QWidget):
         self.__mainLayout=QVBoxLayout()
         self.__encephalogramLayout=QHBoxLayout()
         self.__titleLayout=QHBoxLayout()
+        self.__currentTime=0
         label=QLabel(name)
         label.setFixedSize(200,100)
         label.setAlignment(Qt.AlignCenter)
@@ -64,7 +66,11 @@ class Encephalogram(QWidget):
             backgroundColor)
         self.__mainLayout.addWidget(label,alignment=Qt.AlignHCenter)
         self.__mainLayout.addLayout(self.__encephalogramLayout)
-        self.__timeLabel=QLabel('Tiempo: 00.00s')
+        self.__timeLabel=QLabel('Tiempo: 0:00:00.00')
+        self.__timeLabel.setStyleSheet("""
+            color:black;
+            font: bold 30px;
+        """)
         self.__timeLabel.setAlignment(Qt.AlignCenter)
         self.__mainLayout.addWidget(self.__timeLabel,alignment=Qt.AlignHCenter)
         self.setLayout(self.__mainLayout)
@@ -92,6 +98,12 @@ class Encephalogram(QWidget):
         self.__worker.setPause(pause)
     def getPause(self):
         return self.__worker.getPause()
+    def __updateTimeLabel(self):
+        #self.__timeLabel.setText((self.__timePrefixLabel+"{:.2f}").format(timedelta(seconds=self.__currentTime).total_seconds()))
+        timeLabel=str(timedelta(seconds=self.__currentTime))
+        pointIndex = timeLabel.find('.')
+        timeLabel=timeLabel[0:pointIndex+3]
+        self.__timeLabel.setText(self.__timePrefixLabel+timeLabel)
     def __plotNext(self):
         #print '__plotNext'
         #print 'current values length:',self.__values[self.__i]
@@ -99,11 +111,16 @@ class Encephalogram(QWidget):
         if self.__i < len(self.__values):
             for i,coordinate in enumerate(self.__nodes):
                 self.__draw.ellipse((coordinate[0] - self.__radius, coordinate[1] - self.__radius, coordinate[0] + self.__radius, coordinate[1] + self.__radius), fill = normalizedValueToBlueRedScale(self.__values[self.__i][i]))
+            self.__currentTime=self.__times[self.__i]
+            print 'time:',self.__currentTime
+            self.__updateTimeLabel()
             self.__i+=1
         else:
             #no data, display zero
-             for coordinate in self.__nodes:
+            for coordinate in self.__nodes:
                 self.__draw.ellipse((coordinate[0] - self.__radius, coordinate[1] - self.__radius, coordinate[0] + self.__radius, coordinate[1] + self.__radius), fill = normalizedValueToBlueRedScale(0))
+            self.__currentTime+=0.250
+            self.__updateTimeLabel()
         self.__updateImage()
     def __saveData(self,data):
         self.__times= [ data[moment][0] for moment in xrange(len(data)) ]
