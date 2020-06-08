@@ -4,8 +4,10 @@ import infoDialog
 
 class GlobalInstances:
     __instances={}
+    __app=None
     @staticmethod
-    def buildInstances():
+    def buildInstances(app):
+        GlobalInstances.__app=app
         for constructor in GlobalInstances.__constructors:
             GlobalInstances.__instances[constructor[0]]=constructor[1]()
     @staticmethod
@@ -14,4 +16,9 @@ class GlobalInstances:
             return GlobalInstances.__instances[key]
         print 'error'
         return None
+    @staticmethod
+    def getApp():
+        return GlobalInstances.__app
+
+
     __constructors=[('infoDialog',infoDialog.InfoDialog)]

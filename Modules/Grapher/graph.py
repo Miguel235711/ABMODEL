@@ -9,11 +9,10 @@ class Graph():
     xDifLimit=8
     def mouseClick(self,event):
         print event
-    def __init__(self,timePoints,wavePoints,waveColor,app,name):
+    def __init__(self,timePoints,wavePoints,waveColor,name):
         setConfigOption('background',(230,230,230))
         setConfigOption('foreground',(0,0,0))
         self.__mkPen=mkPen(color=waveColor,width=3)
-        self.__app=app
         mainLayout=QHBoxLayout()
         self.__mainWidget=QWidget()
         self.__mainWidget.setLayout(mainLayout)
@@ -88,7 +87,7 @@ class Graph():
         self.__worker = Worker()
         self.__worker.readyForNextPoint.connect(self.__plotNextPoint)
         self.__firstTime=self.__timePoints[0]
-        self.__worker.startThread(self.__timePoints,self.__app)
+        self.__worker.startThread(self.__timePoints)
         #!self.__plottingThread = self.__QThreadImplementation(self.__realTimePlotting)
         #!self.__plottingThread.start()
     def getGraph(self):

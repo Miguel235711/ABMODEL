@@ -11,12 +11,12 @@ sys.path.append("../CommonWidgets")
 import styles
 
 class Container(QWidget):
-    def __init__(self,changeToUserMenu,username,filePath,app):
+    def __init__(self,changeToUserMenu,username,filePath):
         super(QWidget,self).__init__()
         self.__username=username
         self.__filePath=filePath
         self.__dialogWindow=menu.Menu(changeToUserMenu,username,filePath)
-        self.__graphsWidget=multiGraphContainer.MultiGraphContainer(app)
+        self.__graphsWidget=multiGraphContainer.MultiGraphContainer()
         self.__initUI()
     def initGraphsAndEncephalograms(self,graphData,encephalogramData):
         self.__graphsWidget.initGraphsAndEncephalograms(graphData,encephalogramData)

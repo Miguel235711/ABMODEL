@@ -124,18 +124,18 @@ def changeToUserMenu(username):
     global mainWindow
     mainWindow.setElseAsCentralWidget(userMenu.Pantalla(changeToMenu,changeToGrapher,username))
 def changeToGrapher(username,filePath):
-    global mainWindow,app
+    global mainWindow
     cvFile=readCV(filePath)
     graphData=cvFile.getAverageData()
     encephalogramData=cvFile.getNormalizedNodeData()
-    containerInstance=container.Container(changeToUserMenu,username,filePath,app)
+    containerInstance=container.Container(changeToUserMenu,username,filePath)
     containerInstance.initGraphsAndEncephalograms(graphData,encephalogramData)
     mainWindow.setGrapherAsCentralWidget(containerInstance)
     #print(data)
 def main():
     global mainWindow,app
     app=QApplication([])
-    globalInstances.GlobalInstances.buildInstances()
+    globalInstances.GlobalInstances.buildInstances(app)
     mainWindow=MainWindow('ABMODEL','../../Public/Images/cheese.jpg',menuMain.Pantalla(changeToLogIn,changeToRegister,endApp))
     #changeToGrapher()
     #dummy=[cvFile.getAverageOfWavesAndTime(0),cvFile.getAverageOfWavesAndTime(1),cvFile.getAverageOfWavesAndTime(2),cvFile.getAverageOfWavesAndTime(3)]
