@@ -43,14 +43,13 @@ class Encephalogram(QWidget):
     def __updateImage(self):
         self.__imageLabel.setPixmap(QtGui.QPixmap.fromImage(ImageQt(self.__im)).scaled(465,466))
 
-    def __init__(self,imagePath,app,name,color):
+    def __init__(self,imagePath,name,color):
         #data =[(time0,[val0,val1,...,val31]),(time1,[val0,val1,...,val31]),...]
         super(QWidget,self).__init__()
         #imageLabel.setAlignment(Qt.AlignCenter)
         #rgbValue = normalizedValueToBlueRedScale(0.8)
         #imageLabel.setStyleSheet("color: rgb("+str(rgbValue[0])+","+str(rgbValue[1])+","+str(rgbValue[2])+");")
         #imageLabel.setPixmap(image.scaled(465,466))
-        self.__app=app
         self.__mainLayout=QVBoxLayout()
         self.__encephalogramLayout=QHBoxLayout()
         self.__titleLayout=QHBoxLayout()
@@ -131,5 +130,5 @@ class Encephalogram(QWidget):
         self.__worker = Worker()
         self.__worker.readyForNextPoint.connect(self.__plotNext)
         #print self.__times
-        self.__worker.startThread(self.__times,self.__app)
+        self.__worker.startThread(self.__times)
         #self.setPause(not self.getPause())

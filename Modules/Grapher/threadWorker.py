@@ -2,6 +2,10 @@ from QtCore import QObject,pyqtSignal
 from threading import Thread
 from time import sleep
 
+import sys
+sys.path.append('../GlobalInstances')
+from globalInstances import GlobalInstances
+
 class Worker(QObject):
     readyForNextPoint = pyqtSignal()
     def __init__(self):
@@ -11,12 +15,12 @@ class Worker(QObject):
         self.__pause=True
     def __changeFlagToFalse(self):
         self.__continue=False
-    def startThread(self,timePoints,app):
+    def startThread(self,timePoints):
         #print 'start thread'
         #print 'inside Function()'
         self.__timePoints=timePoints
         self.__thread=Thread(target=self.__func)
-        app.aboutToQuit.connect(self.__changeFlagToFalse)
+        GlobalInstances.getApp().aboutToQuit.connect(self.__changeFlagToFalse)
         self.__thread.start()
     def __func(self):
         #print 'Worker __func()'

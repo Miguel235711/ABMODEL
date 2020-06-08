@@ -16,14 +16,13 @@ class MultiGraphContainer(QWidget):
     __graphNames=['THETA','ALPHA','BETA','DELTA']
     __encephalogramNames=['Theta','Alpha','Beta','Delta']
     __recordPauseTooltipTexts=['Iniciar/Continuar Grabacion de Ondas','Detener Grabacion de Ondas']
-    def __init__(self,app):
+    def __init__(self):
         super(QWidget,self).__init__()
-        self.__app=app
         self.__graphs=[]
         self.__graphLayout=QVBoxLayout()
         self.__encephalograms={}
         for i,encephalogramName in enumerate(self.__encephalogramNames):
-            self.__encephalograms[encephalogramName]=encephalogram.Encephalogram('../../Public/Images/Brain.png',app,self.__graphNames[i],self.__waveColors[i])
+            self.__encephalograms[encephalogramName]=encephalogram.Encephalogram('../../Public/Images/Brain.png',self.__graphNames[i],self.__waveColors[i])
         self.__mainWidget=QWidget(self)
         self.__mainWidget.setLayout(self.__graphLayout)
         self.__mainWidget.setObjectName('mainWidget')
@@ -81,7 +80,7 @@ class MultiGraphContainer(QWidget):
         #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
         print 'initGraphsCalled\n\n\n'
         for i in range(4):
-            self.__graphs.append(graph.Graph([pair[0] for pair in graphData ],[pair[1][i] for pair in graphData],self.__waveColors[i],self.__app,self.__graphNames[i]))
+            self.__graphs.append(graph.Graph([pair[0] for pair in graphData ],[pair[1][i] for pair in graphData],self.__waveColors[i],self.__graphNames[i]))
             self.__graphs[i].plotGraph()
             self.__graphLayout.addWidget(self.__graphs[i].getGraph())
         for i,encephalogramName in enumerate(self.__encephalogramNames): 
