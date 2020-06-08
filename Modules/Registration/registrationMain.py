@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout,QGridLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
@@ -64,7 +65,7 @@ class Pantalla(QWidget):
         
 
         passInputText = QLabel()
-        passInputText.setText("Contrasena :")
+        passInputText.setText(u'Contraseña :')
         #passInputText.move(-100,550)
         passInputText.setAlignment(Qt.AlignCenter)
         passInputText.resize(1920,35)
@@ -73,7 +74,7 @@ class Pantalla(QWidget):
         inputGridLayout.addWidget(passInputText,1,1)
 
         passInput = QLineEdit()
-        passInput.setPlaceholderText("Ingresa tu contrasena")
+        passInput.setPlaceholderText(u'Ingresa tu contraseña')
         #passInput.move(950,550)
         passInput.setEchoMode(QLineEdit.Password)
         passInput.setAlignment(Qt.AlignCenter)
@@ -108,7 +109,7 @@ class Pantalla(QWidget):
 
     def comprobarUsuarioContra(self,user,contra):
         if(len(user) < 8 or len(contra) < 8):
-            self.__dialog.openWarningDialog("Estatus de registro", "Usuario/Contrasena muy corto")
+            self.__dialog.openWarningDialog("Estatus de registro", 'Usuario/Contraseña muy corto')
         else:
             file = open("../Usuarios.txt","a")
             print 'user:',user,'password:',contra

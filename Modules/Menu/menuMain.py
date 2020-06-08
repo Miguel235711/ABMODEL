@@ -35,7 +35,7 @@ class Pantalla(QWidget):
         self.__mainLayout.addWidget(l1,Qt.AlignHCenter)        
 
         l2 = QLabel()
-        l2.setText("Menu Principal")
+        l2.setText(u'Menú Principal')
         #l2.move(0, 0)
         l2.setAlignment(Qt.AlignCenter)
         l2.resize(1920, 670)
@@ -47,7 +47,7 @@ class Pantalla(QWidget):
         print('InputDialog() menuMain.py')
         #positionY = 450
         #positionX = 830
-        btnOk = QPushButton('Iniciar Sesión')
+        btnOk = QPushButton(u'Iniciar Sesión')
         #btnOk.move(positionX, positionY)
         #btnOk.resize(250, 75)
         btnOk.setFont(QFont('SansSerif', 18))

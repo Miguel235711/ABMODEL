@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget,QToolTip,QStatusBar,QLabel,QMessageBox,QHBoxLayout
 from PyQt5.QtGui import QFont,QIcon,QPixmap
 

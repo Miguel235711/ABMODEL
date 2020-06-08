@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget,QLabel,QHBoxLayout
 
 class UserInfo(QWidget):

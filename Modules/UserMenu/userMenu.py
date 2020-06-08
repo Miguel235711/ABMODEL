@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
@@ -54,7 +56,7 @@ class Pantalla(QWidget):
         openFileButton.clicked.connect(self.__openFile)
         inputLayout.addWidget(openFileButton,Qt.AlignHCenter)
 
-        btn = QPushButton('Cerrar Sesion',self)
+        btn = QPushButton(u'Cerrar Sesión',self)
         btn.clicked.connect(self.__changeToMainMenu)
         inputLayout.addWidget(btn,Qt.AlignHCenter)
         inputLayout.setAlignment(Qt.AlignHCenter)
