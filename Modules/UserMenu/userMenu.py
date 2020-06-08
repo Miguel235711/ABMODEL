@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
+import sys
+sys.path.append("../CommonWidgets")
+import styles
 
 class Pantalla(QWidget):
     def __init__(self,changeToMainMenu,changeToGrapher,username):
@@ -40,7 +43,6 @@ class Pantalla(QWidget):
 
         inputLayout.addWidget(welcome,Qt.AlignHCenter)
 
-        QPushButton('Nuevo Archivo')
         newFileButton=QPushButton('Nuevo Archivo')
         newFileButton.setEnabled(False)
         inputLayout.addWidget(newFileButton,Qt.AlignHCenter)
@@ -53,23 +55,7 @@ class Pantalla(QWidget):
         btn.clicked.connect(self.__changeToMainMenu)
         inputLayout.addWidget(btn,Qt.AlignHCenter)
         inputLayout.setAlignment(Qt.AlignHCenter)
-        self.setStyleSheet("""
-        QPushButton{
-            border-radius:20px;
-            background-color:white;
-            padding: 10px;
-            border-width:1.5px;
-            border-color:black;
-            border-style: outset;
-            font: bold 30px;
-            margin-top:20px;
-            margin-bottom:20px;
-            margin-right:80px;
-        }
-        QPushButton:hover {
-            background: rgb(230,230,230)
-        }
-        """)
+        self.setStyleSheet(styles.buttonStyleSheet)
         #btn.move(1000,600)
     def showDialog(self,titulo,textoCuerpo,icon):
         dialog = QMessageBox()

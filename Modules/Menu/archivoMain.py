@@ -43,12 +43,10 @@ class Pantalla(QWidget):
 
         btnNuevoArchivo = QPushButton('Nuevo Archivo', self)
         btnNuevoArchivo.move(positionX, positionY + 200)
-        btnNuevoArchivo.resize(250, 75)
         btnNuevoArchivo.setFont(QFont('SansSerif', 18))
 
         btnAbrirExistente = QPushButton('Abrir Archivo', self)
         btnAbrirExistente.move(positionX, positionY + 300)
-        btnAbrirExistente.resize(250, 75)
         btnAbrirExistente.setFont(QFont('SansSerif', 18))
 
     def comprobarUsuarioContra(self, user, contra):
