@@ -52,7 +52,7 @@ class UserInfo(QWidget):
         filaNameLabel=QLabel('Archivo: ')
         filaNameLabel.setStyleSheet(UserInfo.labelStyleSheet+UserInfo.allInfoChildSheet)
         horizontalLayout.addWidget(filaNameLabel)
-        beg=max(0,len(self.__filePath)-120)
+        beg=max(0,len(self.__filePath)-80)
         self.__fileName=QLabel(('...' if beg>0 else '')+self.__filePath[beg:])
         horizontalLayout.addWidget(self.__fileName)
         self.__fileName.setStyleSheet(UserInfo.allInfoChildSheet)
