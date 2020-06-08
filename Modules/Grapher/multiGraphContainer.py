@@ -1,11 +1,15 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout,QGridLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QPixmap
-from PyQt5.QtCore import QSize,QThreadPool
+from PyQt5.QtCore import QSize,QThreadPool,Qt
 from random import random
 
 import graph 
 import configuration
 import encephalogram
+
+import sys
+sys.path.append("../CommonWidgets")
+import dummy
 
 class MultiGraphContainer(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
@@ -95,21 +99,33 @@ class MultiGraphContainer(QWidget):
         bookmarkButton.setStyleSheet(buttonStyleSheet)
         bookmarkButton.setToolTip('Agregar Nota a Grafica')
         bookmarkButton.setEnabled(False)
-        graphControlsLayout.addWidget(bookmarkButton)
+        bookmarkButton.setFixedSize(iconSize)
+        #graphControlsLayout.addWidget(bookmarkButton)
         self.__recordButton=QPushButton()
         self.__recordButton.setIcon(self.__recordPauseIcons[0])
         self.__recordButton.setIconSize(iconSize)
         self.__recordButton.clicked.connect(self.__togglePause)
         self.__recordButton.setStyleSheet(buttonStyleSheet)
         self.__recordButton.setToolTip(self.__recordPauseTooltipTexts[0])
-        graphControlsLayout.addWidget(self.__recordButton)
+        self.__recordButton.setFixedSize(iconSize)
+        #graphControlsLayout.addWidget(self.__recordButton)
+        bookmarkAndRecordButtonLayout=QHBoxLayout()
+        bookmarkAndRecordButtonLayout.addWidget(dummy.getDummyWidget())
+        bookmarkAndRecordButtonLayout.addWidget(bookmarkButton)
+        bookmarkAndRecordButtonLayout.addWidget(self.__recordButton)
+        bookmarkAndRecordButtonLayout.setSpacing(0)
+        graphControlsLayout.addLayout(bookmarkAndRecordButtonLayout)
         configurationButton=QPushButton()
         configurationButton.setIcon(QIcon('../../Public/Images/configurationIcon.png'))
         configurationButton.setIconSize(iconSize)
         configurationButton.setStyleSheet(buttonStyleSheet)
         configurationButton.clicked.connect(self.onClickConfiguration)
         configurationButton.setToolTip('Cambiar Tipo de Graficacion')
-        graphControlsLayout.addWidget(configurationButton)
+        configurationButton.setFixedSize(iconSize)
+        configurationLayout=QHBoxLayout()
+        configurationLayout.addWidget(dummy.getDummyWidget())
+        configurationLayout.addWidget(configurationButton)
+        graphControlsLayout.addLayout(configurationLayout)
         self.__graphLayoutWidget=QWidget()
         self.__graphLayoutWidget.setLayout(graphControlsLayout)
         self.__graphLayout.addWidget(self.__graphLayoutWidget)

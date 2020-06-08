@@ -1,9 +1,12 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout,QGridLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QLineEdit
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
 import sys
 sys.path.append("../Authentication")
 import authenticationMain as auMain
+sys.path.append("../CommonWidgets")
+import dummy
+import styles
 
 class Pantalla(QWidget):
     def __init__(self,changeToMainMenu):
@@ -11,68 +14,94 @@ class Pantalla(QWidget):
         self.__changeToMainMenu=changeToMainMenu
         self.initUI()
     def initUI(self):
+        self.__mainLayout=QVBoxLayout()
+        self.setLayout(self.__mainLayout)
         self.SetTittle()
         self.InputDialog()
-        self.initWindowUILayout()
-
-    def initWindowUILayout(self):
-        self.mainLayout=QHBoxLayout()
-        self.graphLayout=QVBoxLayout()
-        self.contectivityLayout=QVBoxLayout()
-        self.mainLayout.addLayout(self.contectivityLayout)
-        self.mainLayout.addLayout(self.graphLayout)
-        self.setLayout(self.mainLayout)
 
     def SetTittle(self):
-        l1 = QLabel(self)
+        l1 = QLabel()
         l1.setText("ABMODEL SYSTEM")
-        l1.move(0,0)
+        #l1.move(0,0)
         l1.setAlignment(Qt.AlignCenter)
         l1.resize(1920,540)
         l1.setFont(QFont('SansSerif', 50))
-
-        l2 = QLabel(self)
+        self.__mainLayout.addWidget(l1)
+        
+        l2 = QLabel()
         l2.setText("Sistema de registro")
         l2.move(0,0)
         l2.setAlignment(Qt.AlignCenter)
         l2.resize(1920,670)
         l2.setFont(QFont('SansSerif', 25))
+        self.__mainLayout.addWidget(l2)
 
     def InputDialog(self):
-        usrInputText = QLabel(self)
+        
+        inputGridLayout=QGridLayout()
+        
+        usrInputText = QLabel()
         usrInputText.setText("Usuario :")
-        usrInputText.move(-100,450)
+        #usrInputText.move(-100,450)
         usrInputText.setAlignment(Qt.AlignCenter)
         usrInputText.resize(1920,35)
         usrInputText.setFont(QFont('SansSerif', 20))
-
-        usrInput = QLineEdit(self)
+        inputGridLayout.addWidget(dummy.getDummyWidget(),0,0)
+        inputGridLayout.addWidget(usrInputText,0,1)
+        
+        usrInput = QLineEdit()
         usrInput.setPlaceholderText("Ingresa tu usuario")
-        usrInput.move(950,450)
+        #usrInput.move(950,450)
         usrInput.setAlignment(Qt.AlignCenter)
-        usrInput.resize(200,35)
+        usrInput.setFixedHeight(35)
+        inputGridLayout.addWidget(usrInput,0,2)
+        inputGridLayout.addWidget(dummy.getDummyWidget(),0,3)
 
-        passInputText = QLabel(self)
+        self.__mainLayout.addLayout(inputGridLayout)
+        
+
+        passInputText = QLabel()
         passInputText.setText("Contrasena :")
-        passInputText.move(-100,550)
+        #passInputText.move(-100,550)
         passInputText.setAlignment(Qt.AlignCenter)
         passInputText.resize(1920,35)
         passInputText.setFont(QFont('SansSerif', 20))
+        inputGridLayout.addWidget(dummy.getDummyWidget(),1,0)
+        inputGridLayout.addWidget(passInputText,1,1)
 
-        passInput = QLineEdit(self)
+        passInput = QLineEdit()
         passInput.setPlaceholderText("Ingresa tu contrasena")
-        passInput.move(950,550)
+        #passInput.move(950,550)
         passInput.setEchoMode(QLineEdit.Password)
         passInput.setAlignment(Qt.AlignCenter)
-        passInput.resize(200,35)
+        passInput.setFixedHeight(35)
+        inputGridLayout.addWidget(passInput,1,2)
+        inputGridLayout.addWidget(dummy.getDummyWidget(),1,3)
 
-        btnOk = QPushButton('Aceptar',self)
-        btnOk.move(850,650)
+        btonOkLayout=QHBoxLayout()
+
+        btnOk = QPushButton('Aceptar')
+        btonOkLayout.addWidget(dummy.getDummyWidget())
+        btonOkLayout.addWidget(btnOk)
+        btonOkLayout.addWidget(dummy.getDummyWidget())
+        #btnOk.move(850,650)
         btnOk.clicked.connect(lambda: self.comprobarUsuarioContra(usrInput.text(),passInput.text()))
 
-        btn = QPushButton('Cancelar',self)
+        self.__mainLayout.addLayout(btonOkLayout)
+
+        btnLayout=QHBoxLayout()
+
+        btn = QPushButton('Cancelar')
+        btnLayout.addWidget(dummy.getDummyWidget())
+        btnLayout.addWidget(btn)
+        btnLayout.addWidget(dummy.getDummyWidget())
         btn.clicked.connect(self.__changeToMainMenu)
-        btn.move(1000,650)
+
+        self.__mainLayout.addLayout(btnLayout)
+
+        self.setStyleSheet(styles.buttonStyleSheet)
+
+        #btn.move(1000,650)
 
     def comprobarUsuarioContra(self,user,contra):
         if(len(user) < 8 or len(contra) < 8):

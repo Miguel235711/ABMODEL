@@ -2,6 +2,9 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMess
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from datetime import datetime
+import sys
+sys.path.append("../CommonWidgets")
+import styles
 
 class Menu(QDialog):
     def __init__(self,changeToUserMenu,username,filePath):
@@ -22,23 +25,7 @@ class Menu(QDialog):
         mainLayout=QVBoxLayout()
 
         #initialize sub-layouts
-        self.setStyleSheet("""
-        QPushButton{
-            border-radius:20px;
-            background-color:white;
-            padding: 10px;
-            border-width:1.5px;
-            border-color:black;
-            border-style: outset;
-            font: bold 30px;
-            margin-top:20px;
-            margin-bottom:20px;
-            margin-right:80px;
-        }
-        QPushButton:hover {
-            background: rgb(230,230,230)
-        }
-        """)
+        self.setStyleSheet(styles.buttonStyleSheet)
 
         fileNameLayout=QHBoxLayout()
         pacientLayout=QHBoxLayout()

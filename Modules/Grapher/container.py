@@ -6,6 +6,10 @@ import multiGraphContainer
 import menu
 import userInfo
 
+import sys
+sys.path.append("../CommonWidgets")
+import styles
+
 class Container(QWidget):
     def __init__(self,changeToUserMenu,username,filePath,app):
         super(QWidget,self).__init__()
@@ -50,24 +54,7 @@ class Container(QWidget):
         spRight.setHorizontalStretch(1)
         self.__menuButton=QPushButton("Menu")
         self.__menuButton.setSizePolicy(spRight)
-        self.__menuButton.setStyleSheet(
-        """
-        QPushButton{
-            border-radius:20px;
-            background-color:white;
-            padding: 10px;
-            border-width:1.5px;
-            border-color:black;
-            border-style: outset;
-            font: bold 30px;
-            margin-top:20px;
-            margin-bottom:20px;
-            margin-right:80px;
-        }
-        QPushButton:hover {
-            background: rgb(230,230,230)
-        }
-        """)
+        self.__menuButton.setStyleSheet(styles.buttonStyleSheet)
         self.__menuButton.clicked.connect(self.onClickMenuButton)
         self.__menuButton.setToolTip("Abrir Menu")
         self.__menuBarLayout.addWidget(self.__menuButton)
