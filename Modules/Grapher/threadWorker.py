@@ -31,7 +31,7 @@ class Worker(QObject):
             sleep(time-lastTime)
             self.readyForNextPoint.emit()
             lastTime=time
-        #continue if not more data, every 0.5 s
+        #continue if not more data, every 0.250 s
         while True:
             while(self.__pause):
                 if not self.__continue:
