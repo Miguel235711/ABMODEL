@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QMainWindow,QPushButton,QToolTip,QStatusBar,QLabel,QMessageBox,QApplication
 from PyQt5.QtGui import QFont,QIcon
 import sys
@@ -63,7 +64,7 @@ class MainWindow(QMainWindow):
         self.__statusBarTesterThread.join()
     def closeEvent(self,event):
         reply = QMessageBox.question(self, 'Salir',
-            "Quiere guardar los cambios?", QMessageBox.Yes | 
+            u'¿Quiere guardar los cambios?', QMessageBox.Yes | 
             QMessageBox.No | QMessageBox.Cancel, QMessageBox.No)
         if reply == QMessageBox.Yes or reply == QMessageBox.No:
             #end running threads

@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QHBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog,QRadioButton
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
@@ -7,7 +8,7 @@ class Configuration(QDialog):
     __modes=['Grafica','Theta','Alpha','Beta','Delta']
     def __init__(self,changeToGraphHandler,changeToEncephalogramHandler):
         super(QDialog,self).__init__(None,Qt.WindowStaysOnTopHint | Qt.WindowSystemMenuHint| Qt.WindowCloseButtonHint)
-        self.setWindowTitle('Configuracion')
+        self.setWindowTitle(u'Configuración')
         self.setWindowIcon(QIcon('../../Public/Images/cheese.jpg'))
         self.initDialogWindow()
         self.__changeToGraphHandler=changeToGraphHandler

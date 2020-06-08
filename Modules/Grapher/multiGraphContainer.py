@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout,QGridLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.QtCore import QSize,QThreadPool,Qt
@@ -15,7 +16,7 @@ class MultiGraphContainer(QWidget):
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
     __graphNames=['THETA','ALPHA','BETA','DELTA']
     __encephalogramNames=['Theta','Alpha','Beta','Delta']
-    __recordPauseTooltipTexts=['Iniciar/Continuar Grabacion de Ondas','Detener Grabacion de Ondas']
+    __recordPauseTooltipTexts=[u'Iniciar/Continuar Grabación de Ondas',u'Detener Grabación de Ondas']
     def __init__(self):
         super(QWidget,self).__init__()
         self.__graphs=[]
@@ -96,7 +97,7 @@ class MultiGraphContainer(QWidget):
         bookmarkButton.setIcon(QIcon('../../Public/Images/bookmarkIcon.png'))
         bookmarkButton.setIconSize(iconSize)
         bookmarkButton.setStyleSheet(buttonStyleSheet)
-        bookmarkButton.setToolTip('Agregar Nota a Grafica')
+        bookmarkButton.setToolTip(u'Agregar Nota a Gráfica')
         bookmarkButton.setEnabled(False)
         bookmarkButton.setFixedSize(iconSize)
         #graphControlsLayout.addWidget(bookmarkButton)
@@ -119,7 +120,7 @@ class MultiGraphContainer(QWidget):
         configurationButton.setIconSize(iconSize)
         configurationButton.setStyleSheet(buttonStyleSheet)
         configurationButton.clicked.connect(self.onClickConfiguration)
-        configurationButton.setToolTip('Cambiar Tipo de Graficacion')
+        configurationButton.setToolTip(u'Cambiar Tipo de Graficación')
         configurationButton.setFixedSize(iconSize)
         configurationLayout=QHBoxLayout()
         configurationLayout.addWidget(dummy.getDummyWidget())

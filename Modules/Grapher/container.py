@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 #from pyqtgraph import PlotWidget, plot
@@ -52,11 +53,11 @@ class Container(QWidget):
         #menu button
         spRight=QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
         spRight.setHorizontalStretch(1)
-        self.__menuButton=QPushButton("Menu")
+        self.__menuButton=QPushButton(u'Menú')
         self.__menuButton.setSizePolicy(spRight)
         self.__menuButton.setStyleSheet(styles.buttonStyleSheet)
         self.__menuButton.clicked.connect(self.onClickMenuButton)
-        self.__menuButton.setToolTip("Abrir Menu")
+        self.__menuButton.setToolTip(u'Abrir Menú')
         self.__menuBarLayout.addWidget(self.__menuButton)
 
         #adding sublayouts to globaLayout

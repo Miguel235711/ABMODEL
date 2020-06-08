@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
@@ -56,7 +57,7 @@ class Menu(QDialog):
 
         #filePath
 
-        filePathLayout.addWidget(QLabel('Direccion del Archivo: '))
+        filePathLayout.addWidget(QLabel(u'Dirección del Archivo: '))
         beg=max(0,len(self.__filePath)-160)
         self.__filePathLabel=QLabel(('...' if beg>0 else '')+self.__filePath[beg:])
         filePathLayout.addWidget(self.__filePathLabel)

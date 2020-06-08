@@ -1,3 +1,4 @@
+# encoding: utf-8
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QSizePolicy,QGridLayout,QMessageBox,QToolTip,QLabel,QLineEdit
 from PyQt5.QtGui import QIcon,QFont,QPixmap
 from PyQt5.QtCore import *
@@ -37,7 +38,7 @@ class Pantalla(QWidget):
         self.__mainLayout.addWidget(l1,Qt.AlignHCenter)
 
         l2 = QLabel()
-        l2.setText("Iniciar Sesion")
+        l2.setText(u'Iniciar Sesión')
         #l2.move(0,0)
         l2.setAlignment(Qt.AlignCenter)
         l2.resize(1920,670)
@@ -69,7 +70,7 @@ class Pantalla(QWidget):
         inputTextBoxesGrid.addWidget(dummy.getDummyWidget(),0,0)
         inputTextBoxesGrid.setAlignment(Qt.AlignHCenter)
         passInputText = QLabel()
-        passInputText.setText("Contrasena :")
+        passInputText.setText(u'Contraseña :')
         #passInputText.move(-100,550)
         passInputText.setAlignment(Qt.AlignCenter)
         passInputText.resize(1920,35)
@@ -78,7 +79,7 @@ class Pantalla(QWidget):
         inputTextBoxesGrid.addWidget(passInputText,1,1)
 
         passInput = QLineEdit()
-        passInput.setPlaceholderText("Ingresa tu contrasena")
+        passInput.setPlaceholderText(u'Ingresa tu contraseña')
         #passInput.move(950,550)
         passInput.setEchoMode(QLineEdit.Password)
         passInput.setAlignment(Qt.AlignCenter)
@@ -146,15 +147,15 @@ class Pantalla(QWidget):
             if(userRegistrados[i] == user):
                 if(contraRegistradas[i] == contra):
                     print("Usuario registrado")
-                    self.__dialog.openSuccessDialog("Inicio de sesion", "Iniciando Sesion...")
+                    self.__dialog.openSuccessDialog(u'Inicio de sesión', u'Iniciando Sesión...')
                     # Funcinamiento para entrar al menu
                     self.__changeToUserMenu(user)
                     return
                 else:
-                    self.__dialog.openWarningDialog("Inicio de sesion", "Contrasena Incorrecta")
+                    self.__dialog.openWarningDialog(u'Inicio de sesión', "Contrasena Incorrecta")
                 return
 
-        self.__dialog.openWarningDialog("Inicio de sesion", "Usuario Inexistente")
+        self.__dialog.openWarningDialog('Inicio de sesión', "Usuario Inexistente")
         file.close() 
             
     
