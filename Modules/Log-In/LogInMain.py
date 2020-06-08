@@ -6,6 +6,8 @@ import sys
 sys.path.append('../CommonWidgets')
 import dummy
 import styles
+sys.path.append('../GlobalInstances')
+import globalInstances
 
 class Pantalla(QWidget):
     def __init__(self,changeToMainMenu,changeToUserMenu):
@@ -13,6 +15,7 @@ class Pantalla(QWidget):
         super(QWidget,self).__init__()
         self.__changeToUserMenu=changeToUserMenu
         self.__changeToMainMenu=changeToMainMenu
+        self.__dialog=globalInstances.GlobalInstances.getInstance('infoDialog')
         self.initUI()
 
     def initUI(self):
@@ -143,23 +146,16 @@ class Pantalla(QWidget):
             if(userRegistrados[i] == user):
                 if(contraRegistradas[i] == contra):
                     print("Usuario registrado")
-                    self.showDialog("Inicio de sesion", "Iniciando Sesion...",QMessageBox.Information)
+                    self.__dialog.openSuccessDialog("Inicio de sesion", "Iniciando Sesion...")
                     # Funcinamiento para entrar al menu
                     self.__changeToUserMenu(user)
                     return
                 else:
-                    self.showDialog("Inicio de sesion", "Contrasena Incorrecta",QMessageBox.Warning)
+                    self.__dialog.openWarningDialog("Inicio de sesion", "Contrasena Incorrecta")
                 return
 
-        self.showDialog("Inicio de sesion", "Usuario Inexistente", QMessageBox.Warning)
+        self.__dialog.openWarningDialog("Inicio de sesion", "Usuario Inexistente")
         file.close() 
             
     
-    def showDialog(self,titulo,textoCuerpo,icon):
-        print ('showDialog() LogInMain')
-        dialog = QMessageBox()
-        dialog.setWindowTitle(titulo)
-        dialog.setText(textoCuerpo)
-        dialog.setStyleSheet("QLabel{font-size: 16px;}")
-        dialog.setIcon(icon)
-        x = dialog.exec_()
+    

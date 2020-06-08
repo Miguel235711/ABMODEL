@@ -15,6 +15,8 @@ import state
 import container
 sys.path.append('../Data/Reader')
 import file
+sys.path.append('../GlobalInstances')
+import globalInstances
 
 from threading import Thread
 from time import sleep
@@ -133,6 +135,7 @@ def changeToGrapher(username,filePath):
 def main():
     global mainWindow,app
     app=QApplication([])
+    globalInstances.GlobalInstances.buildInstances()
     mainWindow=MainWindow('ABMODEL','../../Public/Images/cheese.jpg',menuMain.Pantalla(changeToLogIn,changeToRegister,endApp))
     #changeToGrapher()
     #dummy=[cvFile.getAverageOfWavesAndTime(0),cvFile.getAverageOfWavesAndTime(1),cvFile.getAverageOfWavesAndTime(2),cvFile.getAverageOfWavesAndTime(3)]

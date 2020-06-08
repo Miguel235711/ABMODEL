@@ -7,11 +7,14 @@ import authenticationMain as auMain
 sys.path.append("../CommonWidgets")
 import dummy
 import styles
+sys.path.append('../GlobalInstances')
+import globalInstances
 
 class Pantalla(QWidget):
     def __init__(self,changeToMainMenu):
         super(QWidget,self).__init__()
         self.__changeToMainMenu=changeToMainMenu
+        self.__dialog=globalInstances.GlobalInstances.getInstance('infoDialog')
         self.initUI()
     def initUI(self):
         self.__mainLayout=QVBoxLayout()
@@ -105,20 +108,12 @@ class Pantalla(QWidget):
 
     def comprobarUsuarioContra(self,user,contra):
         if(len(user) < 8 or len(contra) < 8):
-            self.showDialog("Estatus de registro", "Usuario/Contrasena muy corto",QMessageBox.Warning)
+            self.__dialog.openWarningDialog("Estatus de registro", "Usuario/Contrasena muy corto")
         else:
             file = open("../Usuarios.txt","a")
             print 'user:',user,'password:',contra
             #file.write(auMain.main(str(user),str(contra))+"\n")
             file.write(str(user)+":"+str(contra)+"\n")
             file.close()
-            self.showDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente" ,QMessageBox.Information)
+            self.__dialog.openSuccessDialog("Estatus de registro", "El usuario \""+user+"\" ha sido registrado correctamente")
             self.__changeToMainMenu()
-    
-    def showDialog(self,titulo,textoCuerpo,icon):
-        dialog = QMessageBox()
-        dialog.setWindowTitle(titulo)
-        dialog.setText(textoCuerpo)
-        dialog.setStyleSheet("QLabel{font-size: 16px;}")
-        dialog.setIcon(icon)
-        x = dialog.exec_()
