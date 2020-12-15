@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget,QGraphicsProxyWidget,QPushButton,QLabel,QHBoxLayout
 from pyqtgraph import PlotWidget,mkPen,setConfigOption,TextItem
-from QtCore import QRectF,Qt
+from PyQt5.QtCore import QRectF,Qt
 from PyQt5 import QtCore
 
 from threadWorker import Worker
@@ -8,7 +8,7 @@ from threadWorker import Worker
 class Graph():
     xDifLimit=8
     def mouseClick(self,event):
-        print event
+        print (event)
     def __init__(self,timePoints,wavePoints,waveColor,name):
         setConfigOption('background',(230,230,230))
         setConfigOption('foreground',(0,0,0))
@@ -22,7 +22,7 @@ class Graph():
         label.setFixedSize(50,30)
         label.setAlignment(Qt.AlignCenter)
         backgroundColor="background:rgb"+"("+str(waveColor[0])+","+str(waveColor[1])+","+str(waveColor[2])+");"
-        print backgroundColor
+        #print backgroundColor
         label.setStyleSheet("""
             color:black;
             font: bold;"""+

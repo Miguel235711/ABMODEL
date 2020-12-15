@@ -112,7 +112,7 @@ class Pantalla(QWidget):
             self.__dialog.openWarningDialog("Estatus de registro", 'Usuario/Contraseña muy corto')
         else:
             file = open("../Usuarios.txt","a")
-            print 'user:',user,'password:',contra
+            #print 'user:',user,'password:',contra
             #file.write(auMain.main(str(user),str(contra))+"\n")
             file.write(str(user)+":"+str(contra)+"\n")
             file.close()

@@ -45,5 +45,5 @@ def encryptacion(_usuario, _password):
         modificador2 = 1
     _password + chr(temp_number % 128 + modificador) + chr(temp_number % 224 + modificador1) + chr(temp_number % 256 + modificador2)
     #Imprimir resultado
-    print (_password)
+    #print (_password)
     return _password

@@ -14,7 +14,7 @@ class GlobalInstances:
     def getInstance(key):
         if key in GlobalInstances.__instances:
             return GlobalInstances.__instances[key]
-        print 'error'
+        #print 'error'
         return None
     @staticmethod
     def getApp():

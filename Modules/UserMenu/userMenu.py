@@ -8,11 +8,13 @@ sys.path.append("../CommonWidgets")
 import styles
 sys.path.append('../GlobalInstances')
 import globalInstances
+from functools import reduce
 
 class Pantalla(QWidget):
+    __allowedFileFormats = set(['csv','xlsx','xls'])
     def __init__(self,changeToMainMenu,changeToGrapher,username):
         super(QWidget,self).__init__()
-        print 'user menu received',username
+        #print 'user menu received',username
         self.__changeToMainMenu=changeToMainMenu
         self.__changeToGrapher=changeToGrapher
         self.__username=username
@@ -21,13 +23,14 @@ class Pantalla(QWidget):
     def initUI(self):
         self.InputDialog()
     def __getFile(self):
-        fileInfo=QFileDialog.getOpenFileName(self,"Selecciona Archivo","","Files (*.csv)")
-        print fileInfo
+        fileFormats = reduce(lambda a,b: a + ' *.' + b, self.__allowedFileFormats)
+        fileInfo=QFileDialog.getOpenFileName(self,"Selecciona Archivo","","Files (*.{})".format(fileFormats))
+        #print fileInfo
         return (True if fileInfo[1]!='' else False,fileInfo[0])
     def __openFile(self):
         filePathAns=self.__getFile()
         tokens=filePathAns[1].split('.')
-        if not tokens or tokens[len(tokens)-1]=='csv':
+        if not tokens or tokens[len(tokens)-1] in self.__allowedFileFormats:
             self.__changeToGrapher(self.__username,filePathAns[1])
         elif filePathAns[0]:
             self.__dialog.openWarningDialog("Error", "El archivo seleccionado no tiene una extension valida, seleccione un archivo .csv")

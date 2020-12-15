@@ -12,18 +12,18 @@ sys.path.append("../CommonWidgets")
 import styles
 
 class Container(QWidget):
-    def __init__(self,changeToUserMenu,username,filePath):
+    def __init__(self,changeToUserMenu,username,filePath,needsToBeReplacedWithGamma):
         super(QWidget,self).__init__()
         self.__username=username
         self.__filePath=filePath
         self.__dialogWindow=menu.Menu(changeToUserMenu,username,filePath)
-        self.__graphsWidget=multiGraphContainer.MultiGraphContainer()
+        self.__graphsWidget=multiGraphContainer.MultiGraphContainer(needsToBeReplacedWithGamma)
         self.__initUI()
     def initGraphsAndEncephalograms(self,graphData,encephalogramData):
         self.__graphsWidget.initGraphsAndEncephalograms(graphData,encephalogramData)
 
     def onClickMenuButton(self):
-        print 'Menu Button Clicked'
+        #print 'Menu Button Clicked'
         self.__dialogWindow.open()
     def __initWindowUILayout(self):
         #root layout

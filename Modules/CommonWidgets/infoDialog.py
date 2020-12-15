@@ -12,7 +12,7 @@ class InfoDialog:
     def openSuccessDialog(self,titulo,textoCuerpo):
         self.__showDialog(titulo,textoCuerpo,self.__successIcon,QMessageBox.Information)
     def __showDialog(self,titulo,textoCuerpo,windowIcon,icon):
-        print ('showDialog() InfoDialog')
+        #print ('showDialog() InfoDialog')
         dialog = QMessageBox()
         dialog.setWindowTitle(titulo)
         dialog.setText(textoCuerpo)
