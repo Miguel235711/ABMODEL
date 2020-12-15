@@ -104,10 +104,6 @@ class MainWindow(QMainWindow):
         )
         self.statusBar().setFixedHeight(40)
         self.setCentralWidget(widget)
-def readCV(path):
-    cvFile=file.File(path)
-    cvFile.readAndSaveData()
-    return cvFile
 mainWindow,app=None,None
 def endApp():
     global mainWindow
@@ -126,10 +122,11 @@ def changeToUserMenu(username):
     mainWindow.setElseAsCentralWidget(userMenu.Pantalla(changeToMenu,changeToGrapher,username))
 def changeToGrapher(username,filePath):
     global mainWindow
-    cvFile=readCV(filePath)
+    cvFile=file.File(filePath)
+    needsToBeReplacedWithGamma = cvFile.readAndSaveData()
     graphData=cvFile.getAverageData()
     encephalogramData=cvFile.getNormalizedNodeData()
-    containerInstance=container.Container(changeToUserMenu,username,filePath)
+    containerInstance=container.Container(changeToUserMenu,username,filePath,needsToBeReplacedWithGamma)
     containerInstance.initGraphsAndEncephalograms(graphData,encephalogramData)
     mainWindow.setGrapherAsCentralWidget(containerInstance)
     #print(data)

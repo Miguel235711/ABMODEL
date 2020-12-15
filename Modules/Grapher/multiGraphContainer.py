@@ -13,11 +13,14 @@ sys.path.append("../CommonWidgets")
 import dummy
 
 class MultiGraphContainer(QWidget):
+    
     __waveColors=[(115,124,161),(203,203,44),(199,28,28),(195,195,195)]
-    __graphNames=['THETA','ALPHA','BETA','DELTA']
-    __encephalogramNames=['Theta','Alpha','Beta','Delta']
     __recordPauseTooltipTexts=[u'Iniciar/Continuar Grabación de Ondas',u'Detener Grabación de Ondas']
-    def __init__(self):
+    
+    def __init__(self,needsToBeReplacedWithGamma):
+        print('does delta need to be replace with gamma? {}'.format(needsToBeReplacedWithGamma))
+        self.__graphNames=['THETA','ALPHA','BETA','GAMMA' if needsToBeReplacedWithGamma else 'DELTA']
+        self.__encephalogramNames=['Theta','Alpha','Beta','Gamma' if needsToBeReplacedWithGamma else 'Delta']
         super(QWidget,self).__init__()
         self.__graphs=[]
         self.__graphLayout=QVBoxLayout()
@@ -39,10 +42,10 @@ class MultiGraphContainer(QWidget):
             }
         """
         )
-        self.__configurationDialog=configuration.Configuration(self.__changeToGraphsHandler,self.__changeToEncephalogramsHandler)
+        self.__configurationDialog=configuration.Configuration(self.__changeToGraphsHandler,self.__changeToEncephalogramsHandler,needsToBeReplacedWithGamma)
         self.__recordPauseIcons=[QIcon('../../Public/Images/recordIcon.png'),QIcon('../../Public/Images/pauseIcon.png')]
     def __changeToGraphsHandler(self,key):
-        print 'changeToGraphsHandler'
+        #print 'changeToGraphsHandler'
         self.__hideEncephalogram(key)
         self.__showGraphs()
 
@@ -52,7 +55,7 @@ class MultiGraphContainer(QWidget):
             self.__encephalograms[key].hide()
 
     def __changeToEncephalogramsHandler(self,lastKey,key):
-        print 'changeToEncephalogramsHandler'
+        #print 'changeToEncephalogramsHandler'
         if lastKey!='':
             self.__hideEncephalogram(lastKey)
         self.__hideGraphs()
@@ -79,7 +82,7 @@ class MultiGraphContainer(QWidget):
 
     def initGraphsAndEncephalograms(self,graphData,encephalogramData):
         #data is [(T1,[A,B,C,D]),(T2,[E,F,G,H]),...]
-        print 'initGraphsCalled\n\n\n'
+        #print 'initGraphsCalled\n\n\n'
         for i in range(4):
             self.__graphs.append(graph.Graph([pair[0] for pair in graphData ],[pair[1][i] for pair in graphData],self.__waveColors[i],self.__graphNames[i]))
             self.__graphs[i].plotGraph()

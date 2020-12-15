@@ -33,11 +33,21 @@ def normalizedValueToBlueRedScale(x):
 
 class Encephalogram(QWidget):
     __radius = 7.5
-    __nodes = [
+    #__nodes32Copy = [
+    #    (190, 64), (190, 102), (178, 140), (128, 132), (148, 176), (200, 182), (171, 217), (109, 217),
+    #    (138, 274), (200, 256), (177, 310),(125, 327), (200, 339), (199, 369), #(235, 380), (235, 298),
+    #    (270, 64), (270, 102), (235, 140), (287, 140), (335, 132), (318, 176), (262, 182), (235, 217),
+    #    (294, 217), (353, 217), (324, 274), (262, 256), (286, 310), (347, 327), (259, 339), (269, 369)
+    #]
+    __nodes32 = [
         (190, 64), (190, 102), (178, 140), (128, 132), (148, 176), (200, 182), (171, 217), (109, 217),
         (138, 274), (200, 256), (177, 310),(125, 327), (200, 339), (199, 369), (235, 380), (235, 298),
         (270, 64), (270, 102), (235, 140), (287, 140), (335, 132), (318, 176), (262, 182), (235, 217),
-        (294, 217), (353, 217), (324, 274), (262, 256), (286, 310), (347, 327), (259, 339), (269, 369)
+        (294, 217), (353, 217), (324, 274), (262, 256), (286, 310), (347, 327), (259, 339), (269, 369),
+    ]
+    __nodes14 = [
+        (190, 64), (128, 132), (190, 102), (178,140), (109, 217), (177, 310), (199, 369), 
+        (269, 369), (286, 310), (353, 217), (287, 140), (270, 102), (335, 132), (270, 64), 
     ]
     __timePrefixLabel='Tiempo: '
     def __updateImage(self):
@@ -58,7 +68,7 @@ class Encephalogram(QWidget):
         label.setFixedSize(200,100)
         label.setAlignment(Qt.AlignCenter)
         backgroundColor="background:rgb"+"("+str(color[0])+","+str(color[1])+","+str(color[2])+");"
-        print backgroundColor
+        #print backgroundColor
         label.setStyleSheet("""
             color:black;
             font: bold 50px;"""+
@@ -84,8 +94,8 @@ class Encephalogram(QWidget):
 
             #for i in xrange(32):
             #    values.append(random())
-            for coordinate in self.__nodes:
-                self.__draw.ellipse((coordinate[0] - self.__radius, coordinate[1] - self.__radius, coordinate[0] + self.__radius, coordinate[1] + self.__radius), fill = (0,0,0))
+            #for coordinate in self.__nodes32:
+                #self.__draw.ellipse((coordinate[0] - self.__radius, coordinate[1] - self.__radius, coordinate[0] + self.__radius, coordinate[1] + self.__radius), fill = (0,0,0))
             self.__imageLabel=QLabel()
             self.__encephalogramLayout.addWidget(self.__imageLabel)
             scale=QLabel()
@@ -106,26 +116,30 @@ class Encephalogram(QWidget):
     def __plotNext(self):
         #print '__plotNext'
         #print 'current values length:',self.__values[self.__i]
-        print 'self.__i',self.__i,'len(self.__values)',len(self.__values)
+        #print 'self.__i',self.__i,'len(self.__values)',len(self.__values)
+        print('len of self.__values: {}'.format(len(self.__values[0])))
         if self.__i < len(self.__values):
-            for i,coordinate in enumerate(self.__nodes):
+            #print('nodes32 len{}'.format(len(chosenNodes)))
+            for i,coordinate in enumerate(self.__chosenNodes):
+                #print('i = {}, len(self.__values[self.__i)) = {}'.format(i,len(self.__values[self.__i])))
                 self.__draw.ellipse((coordinate[0] - self.__radius, coordinate[1] - self.__radius, coordinate[0] + self.__radius, coordinate[1] + self.__radius), fill = normalizedValueToBlueRedScale(self.__values[self.__i][i]))
             self.__currentTime=self.__times[self.__i]
-            print 'time:',self.__currentTime
+            #print 'time:',self.__currentTime
             self.__updateTimeLabel()
             self.__i+=1
         else:
             #no data, display zero
-            for coordinate in self.__nodes:
+            for coordinate in self.__chosenNodes:
                 self.__draw.ellipse((coordinate[0] - self.__radius, coordinate[1] - self.__radius, coordinate[0] + self.__radius, coordinate[1] + self.__radius), fill = normalizedValueToBlueRedScale(0))
             self.__currentTime+=0.250
             self.__updateTimeLabel()
         self.__updateImage()
     def __saveData(self,data):
-        self.__times= [ data[moment][0] for moment in xrange(len(data)) ]
-        self.__values = [ data[moment][1] for moment in xrange(len(data))]
+        self.__times= [ data[moment][0] for moment in range(len(data)) ]
+        self.__values = [ data[moment][1] for moment in range(len(data))]
+        self.__chosenNodes = self.__nodes32 if  len(self.__values[0])== 32 else self.__nodes14
     def initEncephalogram(self,data):
-        print 'initEncephalogram'
+        #print 'initEncephalogram'
         self.__saveData(data)
         self.__worker = Worker()
         self.__worker.readyForNextPoint.connect(self.__plotNext)

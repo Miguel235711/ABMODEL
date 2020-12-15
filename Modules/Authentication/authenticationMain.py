@@ -5,7 +5,7 @@ from passwords import encryptacion
 from users import UsersEncriptation
 
 def main(Usuario, Password):
-    print 'entered main of authenticationMain'
+    #print 'entered main of authenticationMain'
     accept = False
     userContra = ""
     if(len(Usuario) >= 8):

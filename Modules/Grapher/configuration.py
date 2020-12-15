@@ -5,8 +5,9 @@ from PyQt5.QtCore import Qt
 from functools import partial
 
 class Configuration(QDialog):
-    __modes=['Grafica','Theta','Alpha','Beta','Delta']
-    def __init__(self,changeToGraphHandler,changeToEncephalogramHandler):
+    
+    def __init__(self,changeToGraphHandler,changeToEncephalogramHandler,needsToBeReplacedWithGamma):
+        self.__modes=['Grafica','Theta','Alpha','Beta','Gamma' if needsToBeReplacedWithGamma else 'Delta']
         super(QDialog,self).__init__(None,Qt.WindowStaysOnTopHint | Qt.WindowSystemMenuHint| Qt.WindowCloseButtonHint)
         self.setWindowTitle(u'Configuración')
         self.setWindowIcon(QIcon('../../Public/Images/cheese.jpg'))
@@ -15,7 +16,7 @@ class Configuration(QDialog):
         self.__changeToEncephalogramHandler=changeToEncephalogramHandler
         self.__currentTrueRadioButtonKey=''
     def __selectMode(self,key):
-        print 'key: ',key
+        #print 'key: ',key
         if key != self.__currentTrueRadioButtonKey:
             #make changes
             if key=='Grafica':
