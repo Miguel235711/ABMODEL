@@ -12,7 +12,16 @@ Version: **Python 2.7**
           Install pillow for drawing: <i> pip install Pillow </i>
       </li>
     </ul>
-2. <ins>**Run Code of a Module:**</ins>
+2. <ins>**Run Code of the whole Project:**</ins>
+    <ul>
+        <li>
+            Enter to the path "Modules/Main" within a command line prompt (such as cmd or bash) 
+        </li>
+        <li>
+            Run the command <i> python.exe main.py </i>
+        </li>
+    </ul>
+<ins>**Run Code of a Module:**</ins>
     <ul>
         <li>
             Run a .py file that has "main" prefix in its name: <i>python.exe [fileName.py] </li>(Windows cmd) or 
