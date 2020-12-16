@@ -24,7 +24,7 @@ Version: **Python 2.7**
             Run the command <i> python.exe main.py </i>
         </li>
     </ul>
-<ins>**Run Code of a Module:**</ins>
+<ins>**Steps to Run Module:**</ins>
     <ul>
         <li>
             Run a .py file that has "main" prefix in its name: <i>python.exe [fileName.py] </li>(Windows cmd) or 
