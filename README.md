@@ -27,9 +27,9 @@ Version: **Python 2.7**
 <ins>**Steps to Run Module:**</ins>
     <ul>
         <li>
-            Run a .py file that has "main" prefix in its name: <i>python.exe [fileName.py] </li>(Windows cmd) or 
+            Run any .py file that has "main" prefix in its name with the following syntax: <i>python.exe [fileName.py] </li>(Windows cmd) or 
             <i>python [fileName.py] (Linux)</i>
-            Example: <i> python.exe mainWindow.py</i>
+            E.g. <i> python.exe mainWindow.py</i>
         </li>
     </ul>
     
