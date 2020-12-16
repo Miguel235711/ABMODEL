@@ -15,8 +15,8 @@ Version: **Python 2.7**
 2. <ins>**Run Code of a Module:**</ins>
     <ul>
         <li>
-            Run a .py file that has "main" prefix in its name: <i>python.exe <fileName.py> </li>(Windows cmd) or 
-            <i>python <fileName.py> (Linux)</i>
+            Run a .py file that has "main" prefix in its name: <i>python.exe [fileName.py] </li>(Windows cmd) or 
+            <i>python [fileName.py] (Linux)</i>
             Example: <i> python.exe mainWindow.py</i>
         </li>
     </ul>
