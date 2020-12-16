@@ -1,5 +1,8 @@
 # ABMODEL
 Version: **Python 2.7**
+
+<ins>**Steps to Run Project:**</ins>
+
 1. <ins>**Install Dependencies:**</ins>
     <ul>
       <li>
