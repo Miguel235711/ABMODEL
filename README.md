@@ -1,12 +1,12 @@
 # ABMODEL
-Version: **Python 2.7**
+Version: **Python 3.x.x**
 
 <ins>**Steps to Run Project:**</ins>
 
 1. <ins>**Install Dependencies:**</ins>
     <ul>
       <li>
-          Install unofficial release of pyqt5 library for GUI handling: <i>pip install PyQt5</i>
+          Install official release of pyqt5 library for GUI handling: <i>pip install PyQt5</i>
       </li>
       <li>
           Install qtgraph module: <i>pip install pyqtgraph</i>
