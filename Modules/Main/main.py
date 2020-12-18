@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
         self.setStyleSheet(
         """
         QMainWindow{
-            background-image:url(../../Public/Images/background.png)
+            background-image:url(../../Public/Images/background.jpeg)
         }
         """)
     def initUI(self):
