@@ -6,13 +6,16 @@ Version: **Python 2.7**
 1. <ins>**Install Dependencies:**</ins>
     <ul>
       <li>
-          Install unofficial release of pyqt5 library for GUI handling: <i>pip install python-qt5</i>
+          Install unofficial release of pyqt5 library for GUI handling: <i>pip install PyQt5</i>
       </li>
       <li>
           Install qtgraph module: <i>pip install pyqtgraph</i>
       </li>
       <li>
           Install pillow for drawing: <i> pip install Pillow </i>
+      </li>
+      <li>
+          Install xlrd: <i> pip install xlrd </i>
       </li>
     </ul>
 2. <ins>**Run Code of the whole Project:**</ins>
