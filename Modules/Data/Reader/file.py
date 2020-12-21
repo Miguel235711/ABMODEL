@@ -22,39 +22,39 @@ class File:
     def readAndSaveData(self): 
         #returns True if is gamma in place of delta, 
         # otherwise it returns False
-        print('filelocation {}'.format(self.fileLocation))
+        ##print('filelocation {}'.format(self.fileLocation))
         fileFormat = self.fileLocation.split('.').pop()
-        print('fileformat: {}'.format(fileFormat))
+        ##print('fileformat: {}'.format(fileFormat))
         #read data table
         if fileFormat == 'csv':
             #fill dataRows[][] from .csv
             with open(self.fileLocation,'r') as fileL:
                 reader = csv.reader(fileL)
                 self.dataRows=list(reader)
-                #print('dataRows: ${}'.format(self.dataRows))
-                #print 'data read and saved correctly'
-                #print 'number of rows:',len(self.dataRows)
-                #print 'elements per rows:',len(self.dataRows[0])
+                ##print('dataRows: ${}'.format(self.dataRows))
+                ##print 'data read and saved correctly'
+                ##print 'number of rows:',len(self.dataRows)
+                ##print 'elements per rows:',len(self.dataRows[0])
         elif fileFormat == 'xls':
             #fill dataRows[][] from xlsx
             sheet = xlrd.open_workbook(self.fileLocation).sheet_by_index(0)
-            #print('sheet rows: {}'.format(sheet.nrows))
+            ##print('sheet rows: {}'.format(sheet.nrows))
             self.dataRows = [sheet.row_values(i) for i in range(sheet.nrows)]
-            #print('dataRows from xlsx {}'.format(self.dataRows))
+            ##print('dataRows from xlsx {}'.format(self.dataRows))
             #for i in range(sheet.nrows):
-            #    print('row {} {}'.format(i,sheet.row_values(i)))
-            #print('dataRows from xlsx {}'.format(self.dataRows))
+            #    #print('row {} {}'.format(i,sheet.row_values(i)))
+            ##print('dataRows from xlsx {}'.format(self.dataRows))
         elif fileFormat == 'xlsx':
-            print('elif fileFormat == xlsx is true')
+            ##print('elif fileFormat == xlsx is true')
             ws = load_workbook(filename = self.fileLocation).active
-            #print(ws.values)
+            ##print(ws.values)
             self.dataRows = [ [cell for cell in row  ] for row in ws.values ]
-            print('xlsx self.dataRows: {}'.format(self.dataRows))
+            ##print('xlsx self.dataRows: {}'.format(self.dataRows))
         #save copy for ad-hoc file configurations
         dataRowsCopy = self.dataRows
         #remove non number rows
         self.dataRows = [ row for row in self.dataRows if self.__parseToFloat(row[0])!=0.0 or self.__parseToFloat(row[1])!=0.0] #super specific way of removing it
-        #print('self.dataRows = {}'.format(self.dataRows))
+        ##print('self.dataRows = {}'.format(self.dataRows))
         #*check ad-hoc file configurations (using dataRowsCopy): 
         #  1. if "gamma" (case insensitive) pattern is found in any part
         #     of the input, change dinamically in multiGraphContainer.py "delta" by "gamma"
@@ -74,7 +74,7 @@ class File:
                     betaHPos = cellLower.find('betah') 
                     if betaHPos != -1:
                         betaLHFoundPos[j]=LPos
-        print('gammaFound: {}'.format(gammaFound))
+        ##print('gammaFound: {}'.format(gammaFound))
         #timestamp normalization definition
         self.dataRows[0][0] = self.__parseToFloat(self.dataRows[0][0])
         firstTimeNorm = self.dataRows[0][0] if self.dataRows[0][0] > 1000 else 0.0 
@@ -91,8 +91,8 @@ class File:
             self.dataRows[i][0] = self.dataRows[i][0] - firstTimeNorm
         #remove extra betaH for the case of beta reduction
         self.dataRows = [ [ cell for j,cell in enumerate(row) if j not in betaLHFoundPos ] for row in self.dataRows ]
-        #print(len(self.dataRows[0]))
-        #print('dataRows {}'.format(self.dataRows))
+        ##print(len(self.dataRows[0]))
+        ##print('dataRows {}'.format(self.dataRows))
         #reduce beta if betaLFoundPos and betaHFoundPos are not empty
         self.__calcAmountOfSensors()
         return gammaFound
