@@ -4,9 +4,9 @@ import sys
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout,QMessageBox,QToolTip,QLabel,QSizePolicy,QDialog,QLineEdit,QFileDialog
 from PyQt5.QtGui import QIcon,QPixmap, QPen, QPainter
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize, Qt,QPoint
 from math import ceil
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw,ImageFont
 from PIL.ImageQt import ImageQt
 from  threadWorker import Worker
 from datetime import timedelta
@@ -40,14 +40,14 @@ class Encephalogram(QWidget):
     #    (294, 217), (353, 217), (324, 274), (262, 256), (286, 310), (347, 327), (259, 339), (269, 369)
     #]
     __nodes32 = [
-        (190, 64), (190, 102), (178, 140), (128, 132), (148, 176), (200, 182), (171, 217), (109, 217),
-        (138, 274), (200, 256), (177, 310),(125, 327), (200, 339), (199, 369), (235, 380), (235, 298),
-        (270, 64), (270, 102), (235, 140), (287, 140), (335, 132), (318, 176), (262, 182), (235, 217),
-        (294, 217), (353, 217), (324, 274), (262, 256), (286, 310), (347, 327), (259, 339), (269, 369),
+        (190, 64,'Fp1'), (190, 102,'AF3'), (178, 140,'F3'), (128, 132,'F7'), (148, 176,'FC5'), (200, 182,'FC1'), (171, 217,'C3'), (109, 217,'T7'),
+        (138, 274,'CP5'), (200, 256,'CP1'), (177, 310,'P3'),(125, 327,'P7'), (200, 339,'PO3'), (199, 369,'O1'), (235, 380,'Oz'), (235, 298,'Pz'),
+        (270, 64,'Fp2'), (270, 102,'AF4'), (235, 140,'Fz'), (287, 140,'F4'), (335, 132,'F8'), (318, 176,'FC6'), (262, 182,'FC2'), (235, 217,'Cz'),
+        (294, 217,'C4'), (353, 217,'T8'), (324, 274,'CP6'), (262, 256,'CP2'), (286, 310,'P4'), (347, 327,'P8'), (259, 339,'PO4'), (269, 369,'O2'),
     ]
     __nodes14 = [
-        (190, 64), (128, 132), (190, 102), (178,140), (109, 217), (177, 310), (199, 369), 
-        (269, 369), (286, 310), (353, 217), (287, 140), (270, 102), (335, 132), (270, 64), 
+        (190, 64,'AF3'), (128, 132,'F7'), (190, 102,'F3'), (178,140,'FC5'), (109, 217,'T7'), (177, 310,'P7'), (199, 369,'O1'), 
+        (269, 369,'O2'), (286, 310,'P8'), (353, 217,'T8'), (287, 140,'FC6'), (270, 102,'F4'), (335, 132,'F8'), (270, 64,'AF4') 
     ]
     __timePrefixLabel='Tiempo: '
     def __updateImage(self):
@@ -138,6 +138,9 @@ class Encephalogram(QWidget):
         self.__times= [ data[moment][0] for moment in range(len(data)) ]
         self.__values = [ data[moment][1] for moment in range(len(data))]
         self.__chosenNodes = self.__nodes32 if  len(self.__values[0])== 32 else self.__nodes14
+        #set node labels
+        for coordinate in self.__chosenNodes:
+            self.__draw.text((coordinate[0] + self.__radius, coordinate[1] + self.__radius),coordinate[2],font = ImageFont.truetype("fonts/arial.ttf",size=13))
     def initEncephalogram(self,data):
         #print 'initEncephalogram'
         self.__saveData(data)
@@ -146,3 +149,6 @@ class Encephalogram(QWidget):
         #print self.__times
         self.__worker.startThread(self.__times)
         #self.setPause(not self.getPause())
+    #def mouseMoveEvent(self,event):
+    #    print('mouseMoveEvent pos: {}'.format(event.pos()))
+    #    showText(QPoint(0,0),"hello")
