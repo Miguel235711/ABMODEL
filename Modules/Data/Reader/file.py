@@ -1,6 +1,7 @@
 import csv
 import xlrd
 import numbers
+from openpyxl import load_workbook
 
 class File:
     
@@ -34,7 +35,7 @@ class File:
                 #print 'data read and saved correctly'
                 #print 'number of rows:',len(self.dataRows)
                 #print 'elements per rows:',len(self.dataRows[0])
-        else:
+        elif fileFormat == 'xls':
             #fill dataRows[][] from xlsx
             sheet = xlrd.open_workbook(self.fileLocation).sheet_by_index(0)
             #print('sheet rows: {}'.format(sheet.nrows))
@@ -43,6 +44,12 @@ class File:
             #for i in range(sheet.nrows):
             #    print('row {} {}'.format(i,sheet.row_values(i)))
             #print('dataRows from xlsx {}'.format(self.dataRows))
+        elif fileFormat == 'xlsx':
+            print('elif fileFormat == xlsx is true')
+            ws = load_workbook(filename = self.fileLocation).active
+            #print(ws.values)
+            self.dataRows = [ [cell for cell in row  ] for row in ws.values ]
+            print('xlsx self.dataRows: {}'.format(self.dataRows))
         #save copy for ad-hoc file configurations
         dataRowsCopy = self.dataRows
         #remove non number rows
