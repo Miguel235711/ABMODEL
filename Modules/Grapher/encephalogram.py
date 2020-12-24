@@ -49,6 +49,9 @@ class Encephalogram(QWidget):
         (190, 64,'AF3'), (128, 132,'F7'), (190, 102,'F3'), (178,140,'FC5'), (109, 217,'T7'), (177, 310,'P7'), (199, 369,'O1'), 
         (269, 369,'O2'), (286, 310,'P8'), (353, 217,'T8'), (287, 140,'FC6'), (270, 102,'F4'), (335, 132,'F8'), (270, 64,'AF4') 
     ]
+    __nodes5 = [
+        (190, 102,'AF3'), (109, 217,'T7'), (235, 298,'Pz'), (353, 217,'T8'), (270, 102,'AF4'), 
+    ]
     __timePrefixLabel='Tiempo: '
     def __updateImage(self):
         self.__imageLabel.setPixmap(QtGui.QPixmap.fromImage(ImageQt(self.__im)).scaled(465,466))
@@ -137,7 +140,9 @@ class Encephalogram(QWidget):
     def __saveData(self,data):
         self.__times= [ data[moment][0] for moment in range(len(data)) ]
         self.__values = [ data[moment][1] for moment in range(len(data))]
-        self.__chosenNodes = self.__nodes32 if  len(self.__values[0])== 32 else self.__nodes14
+        numberOfNodes = len(self.__values[0])
+        print('numberOfNodes {}'.format(numberOfNodes))
+        self.__chosenNodes = self.__nodes32 if numberOfNodes  == 32 else (self.__nodes14 if numberOfNodes == 14 else (self.__nodes5 if numberOfNodes == 5 else None))
         #set node labels
         for coordinate in self.__chosenNodes:
             self.__draw.text((coordinate[0] + self.__radius, coordinate[1] + self.__radius),coordinate[2],font = ImageFont.truetype("fonts/arial.ttf",size=13))

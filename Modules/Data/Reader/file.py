@@ -18,7 +18,9 @@ class File:
     def __init__(self,fileLocation):
         self.fileLocation=fileLocation
     def __calcAmountOfSensors(self):
+        print('len of dataRows[0] after beta reduction: {}'.format(len(self.dataRows[0])))
         self.amountOfSensors=(len(self.dataRows[0])-1)/self.amountOfWaves  
+        print('amountOfSensors: {}'.format(self.amountOfSensors))
     def readAndSaveData(self): 
         #returns True if is gamma in place of delta, 
         # otherwise it returns False
@@ -54,6 +56,7 @@ class File:
         dataRowsCopy = self.dataRows
         #remove non number rows
         self.dataRows = [ row for row in self.dataRows if self.__parseToFloat(row[0])!=0.0 or self.__parseToFloat(row[1])!=0.0] #super specific way of removing it
+        print('after removing non numbers: {}'.format(self.dataRows))
         ##print('self.dataRows = {}'.format(self.dataRows))
         #*check ad-hoc file configurations (using dataRowsCopy): 
         #  1. if "gamma" (case insensitive) pattern is found in any part
@@ -74,7 +77,8 @@ class File:
                     betaHPos = cellLower.find('betah') 
                     if betaHPos != -1:
                         betaLHFoundPos[j]=LPos
-        ##print('gammaFound: {}'.format(gammaFound))
+        #print('gammaFound: {}'.format(gammaFound))
+        print('betaLHFoundPos {}'.format(betaLHFoundPos))
         #timestamp normalization definition
         self.dataRows[0][0] = self.__parseToFloat(self.dataRows[0][0])
         firstTimeNorm = self.dataRows[0][0] if self.dataRows[0][0] > 1000 else 0.0 
@@ -89,6 +93,7 @@ class File:
                     self.dataRows[i][betaLPos]/=2
              #timestamp normalization
             self.dataRows[i][0] = self.dataRows[i][0] - firstTimeNorm
+        print('len of dataRows[0] before beta reduction: {}'.format(len(self.dataRows[0])))
         #remove extra betaH for the case of beta reduction
         self.dataRows = [ [ cell for j,cell in enumerate(row) if j not in betaLHFoundPos ] for row in self.dataRows ]
         ##print(len(self.dataRows[0]))
